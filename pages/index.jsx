@@ -1,21 +1,32 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from "react";
-import styles from "../styles/Home.module.css";
+import styles from "@/styles/Home.module.css";
 import { BiLinkExternal } from "react-icons/bi";
-import Layout from "../components/Layout";
+import Layout from "@/components/Layout";
+import Developer from "@/components/Developer";
 
 export default function Home() {
-  const [users, setUsers] = useState([]);
+  const [developers, setDevelopers] = useState([]);
+  const [devId, setDevId] = useState();
 
   useEffect(() => {
-    getUsers();
+    getDevelopers();
   }, []);
 
-  async function getUsers() {
+  const handleClick = (id) => {
+    setDevId(id);
+    // let timer;
+    // timer = setTimeout(() => {
+    //   clearTimeout(timer);
+    //   setDevId(false);
+    // }, 2000);
+  };
+
+  async function getDevelopers() {
     try {
       const res = await fetch("https://jsonplaceholder.typicode.com/users");
       const data = await res.json();
-      setUsers(data);
+      setDevelopers(data);
     } catch (error) {
       console.log(error);
     }
@@ -24,33 +35,35 @@ export default function Home() {
   return (
     <Layout>
       <div className={styles.container}>
-        <div className={styles.cards}>
-          {users.map((user) => (
-            <Card key={user.id} user={user} />
-          ))}
-          {users.map((user) => (
-            <Card key={user.id} user={user} />
-          ))}
-          {users.map((user) => (
-            <Card key={user.id} user={user} />
-          ))}
-          {users.map((user) => (
-            <Card key={user.id} user={user} />
-          ))}
+        <div style={{ width: devId ? "55%" : "100%" }} className={styles.left}>
+          <div className={styles.cards}>
+            {developers.map((developer) => (
+              <Card
+                handleClick={handleClick}
+                key={developers.id}
+                developer={developer}
+              />
+            ))}
+          </div>
         </div>
+        {devId && (
+          <div className={styles.right}>
+            <Developer />
+          </div>
+        )}
       </div>
     </Layout>
   );
 }
 
-function Card({ user }) {
-  const { name, email, website, address, company } = user;
+function Card({ developer, handleClick }) {
+  const { id, name, email, website, address, company } = developer;
   const { street, suite, city } = address;
 
   return (
-    <div className={styles.card}>
+    <div onClick={() => handleClick(id)} className={styles.card}>
       <img
-        src={`https://api.dicebear.com/5.x/avataaars/svg?seed=${user.name}`}
+        src={`https://api.dicebear.com/5.x/avataaars/svg?seed=${name}`}
         alt=""
       />
       <div className={styles.basic}>

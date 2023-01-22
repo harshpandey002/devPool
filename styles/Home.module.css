@@ -1,12 +1,37 @@
 .container {
-  /* width: 50%; */
+  display: flex;
+  height: 100vh;
+}
+
+.left {
+  align-items: stretch;
+  overflow: overlay;
+  transition: width 0.2s ease;
+}
+
+.right {
+  padding: 8rem 4rem 4rem 2rem;
+  width: 45%;
+  align-items: stretch;
+  transition: width 0.2s ease;
+  position: sticky;
+  top: 0;
+  overflow: overlay;
+}
+
+.right::-webkit-scrollbar,
+.left::-webkit-scrollbar {
+  /* width: 18px !important; */
+  width: 0px !important;
 }
 
 .cards {
   width: 100%;
   padding: 4rem;
+  padding-right: 2rem;
+  padding-top: 8rem;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.5rem;
 }
 
