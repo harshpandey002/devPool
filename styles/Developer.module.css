@@ -39,6 +39,14 @@
 
 .info a {
   color: rgb(24, 84, 173);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.info a:hover {
+  text-decoration: underline;
 }
 
 .socials {
