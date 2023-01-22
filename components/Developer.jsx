@@ -27,12 +27,15 @@ export default function Developer({ developer }) {
           <a>
             {website} <BiLinkExternal />
           </a>
-          <span className={styles.socials}>
-            <FaLinkedinIn className={styles.icon} />
-            <AiFillInstagram className={styles.icon} />
-            <AiOutlineTwitter className={styles.icon} />
-            <AiFillGithub className={styles.icon} />
-          </span>
+          <div className={styles.cta}>
+            <span className={styles.socials}>
+              <FaLinkedinIn className={styles.icon} />
+              <AiFillInstagram className={styles.icon} />
+              <AiOutlineTwitter className={styles.icon} />
+              <AiFillGithub className={styles.icon} />
+            </span>
+            <button id={styles.approach}>Approach</button>
+          </div>
         </div>
       </div>
     </div>

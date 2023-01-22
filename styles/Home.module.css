@@ -12,6 +12,7 @@
 .right {
   padding: 8rem 4rem 4rem 2rem;
   width: 45%;
+  min-width: 650px;
   align-items: stretch;
   transition: width 0.2s ease;
   position: sticky;
