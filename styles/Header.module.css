@@ -1,0 +1,28 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 4rem;
+  background-color: #151515;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.358);
+}
+
+.header h1 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #ececec;
+}
+
+.header ul {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  list-style: none;
+}
+
+.header ul li {
+  color: #cdcdcd;
+}

@@ -13,9 +13,8 @@
 
 html,
 body {
-  min-height: 100vh;
   overflow: overlay;
-  font-family: Poppins, sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 a {
