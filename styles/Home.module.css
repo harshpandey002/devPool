@@ -36,6 +36,7 @@
 }
 
 .card {
+  border: 1px solid transparent;
   background-color: #151515;
   padding: 1rem;
   display: flex;
@@ -94,4 +95,9 @@
   border-radius: 50%;
   /* margin-top: -20%;
   margin-left: -10%; */
+}
+
+.activeDev {
+  border-color: #252525 !important;
+  background-color: #181818 !important;
 }

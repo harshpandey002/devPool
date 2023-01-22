@@ -7,18 +7,18 @@ import Developer from "@/components/Developer";
 
 export default function Home() {
   const [developers, setDevelopers] = useState([]);
-  const [devId, setDevId] = useState();
+  const [activedevId, setActiveDevId] = useState();
 
   useEffect(() => {
     getDevelopers();
   }, []);
 
   const handleClick = (id) => {
-    setDevId(id);
+    setActiveDevId(id);
     // let timer;
     // timer = setTimeout(() => {
     //   clearTimeout(timer);
-    //   setDevId(false);
+    //   setActiveDevId(false);
     // }, 2000);
   };
 
@@ -35,18 +35,22 @@ export default function Home() {
   return (
     <Layout>
       <div className={styles.container}>
-        <div style={{ width: devId ? "55%" : "100%" }} className={styles.left}>
+        <div
+          style={{ width: activedevId ? "55%" : "100%" }}
+          className={styles.left}
+        >
           <div className={styles.cards}>
             {developers.map((developer) => (
-              <Card
+              <DevCard
                 handleClick={handleClick}
                 key={developers.id}
                 developer={developer}
+                activedevId={activedevId}
               />
             ))}
           </div>
         </div>
-        {devId && (
+        {activedevId && (
           <div className={styles.right}>
             <Developer />
           </div>
@@ -56,12 +60,15 @@ export default function Home() {
   );
 }
 
-function Card({ developer, handleClick }) {
+function DevCard({ developer, handleClick, activedevId }) {
   const { id, name, email, website, address, company } = developer;
   const { street, suite, city } = address;
 
   return (
-    <div onClick={() => handleClick(id)} className={styles.card}>
+    <div
+      onClick={() => handleClick(id)}
+      className={`${styles.card} ${activedevId == id ? styles.activeDev : ""}`}
+    >
       <img
         src={`https://api.dicebear.com/5.x/avataaars/svg?seed=${name}`}
         alt=""
