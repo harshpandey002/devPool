@@ -7,7 +7,7 @@ import Developer from "@/components/Developer";
 
 export default function Home() {
   const [developers, setDevelopers] = useState([]);
-  const [activedevId, setActiveDevId] = useState();
+  const [activeDevId, setActiveDevId] = useState();
 
   useEffect(() => {
     getDevelopers();
@@ -32,11 +32,13 @@ export default function Home() {
     }
   }
 
+  const activeDeveloper = developers.filter((dev) => dev.id === activeDevId)[0];
+
   return (
     <Layout>
       <div className={styles.container}>
         <div
-          style={{ width: activedevId ? "55%" : "100%" }}
+          style={{ width: activeDevId ? "55%" : "100%" }}
           className={styles.left}
         >
           <div className={styles.cards}>
@@ -45,14 +47,14 @@ export default function Home() {
                 handleClick={handleClick}
                 key={developers.id}
                 developer={developer}
-                activedevId={activedevId}
+                activedevId={activeDevId}
               />
             ))}
           </div>
         </div>
-        {activedevId && (
+        {activeDevId && (
           <div className={styles.right}>
-            <Developer />
+            <Developer developer={activeDeveloper} />
           </div>
         )}
       </div>
@@ -60,14 +62,14 @@ export default function Home() {
   );
 }
 
-function DevCard({ developer, handleClick, activedevId }) {
+function DevCard({ developer, handleClick, activeDevId }) {
   const { id, name, email, website, address, company } = developer;
   const { street, suite, city } = address;
 
   return (
     <div
       onClick={() => handleClick(id)}
-      className={`${styles.card} ${activedevId == id ? styles.activeDev : ""}`}
+      className={`${styles.card} ${activeDevId == id ? styles.activeDev : ""}`}
     >
       <img
         src={`https://api.dicebear.com/5.x/avataaars/svg?seed=${name}`}
