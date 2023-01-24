@@ -7,7 +7,7 @@
   flex-direction: column;
   border-radius: 8px;
   box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.144);
-  height: 110vh;
+  height: max-content;
   color: white;
 }
 
@@ -92,4 +92,66 @@
 
 #approach:active {
   scale: 0.95;
+}
+
+.skills,
+.stack {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 3rem;
+}
+
+.skills span,
+.stack span {
+  padding: 6px 12px;
+  background-color: #0f0f0f;
+  color: #c4c4c4;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+.stack {
+  margin-top: 1rem;
+}
+
+.stack span {
+  font-size: 12px;
+  background-color: #151515;
+}
+
+.experience {
+  margin-top: 3rem;
+}
+
+.experience > p {
+  margin-bottom: 8px;
+}
+
+.exps {
+  border-left: 1px solid #202020;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-left: 12px;
+}
+
+.expCard {
+  padding: 12px;
+  background-color: #0f0f0f;
+  border-radius: 6px;
+}
+
+.expCard p {
+  font-size: 14px;
+}
+
+.expCard p span {
+  color: #a3a3a3;
+}
+
+.desc {
+  margin-top: 12px;
+  color: #dcdcdc;
 }
