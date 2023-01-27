@@ -1,0 +1,9 @@
+.container {
+  padding-top: 8rem;
+}
+
+.content {
+  width: 70%;
+  min-width: 600px;
+  background-color: var(--card-bg);
+}

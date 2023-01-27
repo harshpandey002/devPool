@@ -1,12 +1,12 @@
 .container {
   padding: 2rem;
   flex: 1;
-  background-color: #151515;
+  background-color: var(--card-bg);
   height: 100px;
   display: flex;
   flex-direction: column;
   border-radius: 8px;
-  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.144);
+  box-shadow: 0px 0px 6px #00000025;
   height: max-content;
   color: white;
 }
@@ -39,7 +39,7 @@
 }
 
 .info a {
-  color: #2166c1;
+  color: var(--link);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -85,7 +85,7 @@
 .skills span,
 .stack span {
   padding: 6px 12px;
-  background-color: #0f0f0f;
+  background-color: var(--bg);
   color: #c4c4c4;
   font-size: 14px;
   border-radius: 4px;
@@ -97,7 +97,7 @@
 
 .stack span {
   font-size: 12px;
-  background-color: #151515;
+  background-color: var(--card-bg);
 }
 
 .experience {
@@ -118,7 +118,7 @@
 
 .expCard {
   padding: 12px;
-  background-color: #0f0f0f;
+  background-color: var(--bg);
   border-radius: 6px;
 }
 
