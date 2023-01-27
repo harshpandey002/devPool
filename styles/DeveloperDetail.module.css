@@ -39,7 +39,7 @@
 }
 
 .info a {
-  color: rgb(24, 84, 173);
+  color: #2166c1;
   cursor: pointer;
   display: flex;
   align-items: center;

@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
-import styles from "@/styles/Developer.module.css";
+import styles from "@/styles/DeveloperDetail.module.css";
 import { BiLinkExternal } from "react-icons/bi";
 import { FaLinkedinIn } from "react-icons/fa";
 import {
