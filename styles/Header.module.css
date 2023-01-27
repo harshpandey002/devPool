@@ -27,4 +27,14 @@
 
 .header ul li {
   color: #cdcdcd;
+  cursor: pointer;
+}
+
+.header ul li:hover {
+  color: #fcfcfc;
+}
+
+#cta {
+  padding: 8px 12px;
+  font-size: 16px;
 }

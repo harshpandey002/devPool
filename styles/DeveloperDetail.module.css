@@ -73,27 +73,6 @@
   color: white;
 }
 
-#approach {
-  padding: 6px 12px;
-  font-size: 14px;
-  font-weight: 500;
-  background-color: #0a458e;
-  color: white;
-  border: none;
-  outline: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: scale 0.2s ease;
-}
-
-#approach:hover {
-  background-color: #0d52a7;
-}
-
-#approach:active {
-  scale: 0.95;
-}
-
 .skills,
 .stack {
   display: flex;

@@ -34,7 +34,7 @@ export default function Developer({ developer }) {
               <AiOutlineTwitter className={styles.icon} />
               <AiFillGithub className={styles.icon} />
             </span>
-            <button id={styles.approach}>Approach</button>
+            <button>Approach</button>
           </div>
         </div>
       </div>
