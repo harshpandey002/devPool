@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React from "react";
 import styles from "@/styles/Header.module.css";
 
@@ -8,8 +9,11 @@ export default function Header() {
       <ul>
         <li>Developers</li>
         <li>Inbox</li>
+        {/* <li>
+          <button>Create Profile</button>
+        </li> */}
         <li>
-          <button id={styles.cta}>Create Profile</button>
+          <button id={styles.profile}>Harsh Pandey</button>
         </li>
       </ul>
     </div>

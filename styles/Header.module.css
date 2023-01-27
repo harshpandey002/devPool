@@ -16,6 +16,7 @@
   font-size: 24px;
   font-weight: 700;
   color: #ececec;
+  cursor: pointer;
 }
 
 .header ul {
@@ -28,13 +29,22 @@
 .header ul li {
   color: #cdcdcd;
   cursor: pointer;
+  display: flex;
 }
 
 .header ul li:hover {
   color: #fcfcfc;
 }
 
-#cta {
+.header ul li button {
   padding: 8px 12px;
   font-size: 16px;
+}
+
+#profile {
+  background-color: #181818;
+}
+
+#profile:hover {
+  background-color: #252525;
 }
