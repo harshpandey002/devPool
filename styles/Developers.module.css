@@ -46,7 +46,7 @@
   justify-content: space-between;
   border-radius: 8px;
   gap: 1rem;
-  box-shadow: 0px 0px 6px #00000025;
+  box-shadow: var(--card-shadow);
   cursor: pointer;
 }
 

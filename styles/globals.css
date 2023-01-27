@@ -5,6 +5,7 @@
   --link: #2166c1;
   --bg: #0f0f0f;
   --card-bg: #151515;
+  --card-shadow: 0px 0px 6px #00000025;
 }
 
 * {
