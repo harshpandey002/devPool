@@ -18,7 +18,7 @@
   padding: 2rem;
 }
 
-.question > p {
+.question p {
   color: gray;
   margin-bottom: 4px;
 }
@@ -41,4 +41,37 @@
 
 .skills span:hover {
   background-color: #111111;
+}
+
+.experience {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 1rem;
+  border: 1px solid #242424;
+  border-radius: 4px;
+  margin-top: 8px;
+}
+
+.inputGroup {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+
+.inputGroup div {
+  flex: 1;
+}
+
+.action {
+  display: flex;
+  gap: 8px;
+}
+
+#delete {
+  background-color: #9b1a1a;
+}
+
+#delete:hover {
+  background-color: #bc2020;
 }

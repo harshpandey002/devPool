@@ -23,6 +23,20 @@ const defaultValues = {
 
 export default function CreateProfile() {
   const [skills, setSkills] = useState("");
+  const [experiences, setExperiences] = useState([
+    {
+      companyName: "",
+      jobTitle: "",
+      description: "",
+    },
+  ]);
+  const [projects, setProjects] = useState([
+    {
+      title: "",
+      techStack: "",
+      description: "",
+    },
+  ]);
   const {
     register,
     handleSubmit,
@@ -30,7 +44,7 @@ export default function CreateProfile() {
     formState: { errors },
   } = useForm({ defaultValues });
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => console.log("Submit Triggered");
 
   return (
     <Layout>
@@ -64,6 +78,7 @@ export default function CreateProfile() {
           />
         </div>
         <Skills skills={skills} setSkills={setSkills} />
+        <Experience experiences={experiences} setExperiences={setExperiences} />
       </form>
     </Layout>
   );
@@ -97,6 +112,58 @@ function Skills({ skills, setSkills }) {
             </span>
           ))}
       </div>
+    </div>
+  );
+}
+
+function Experience({ experiences, setExperiences }) {
+  const addExperience = () => {
+    setExperiences((prev) => [
+      ...prev,
+      {
+        companyName: "",
+        jobTitle: "",
+        description: "",
+      },
+    ]);
+  };
+
+  const delExperience = (i) => {
+    const newExp = JSON.parse(JSON.stringify(experiences));
+    newExp.splice(i, 1);
+
+    setExperiences(newExp);
+  };
+
+  return (
+    <div className={styles.question}>
+      <p>Experiences</p>
+      {experiences.map((exp, i) => (
+        <div key={i} className={styles.experience}>
+          <div className={styles.inputGroup}>
+            <div>
+              <p>Company Name</p>
+              <input type="text" placeholder="BlockTrain" />
+            </div>
+            <div>
+              <p>Job Title</p>
+              <input type="text" placeholder="Full-Stack Developer" />
+            </div>
+          </div>
+          <div>
+            <p>Description</p>
+            <textarea rows={3} />
+          </div>
+          <div className={styles.action}>
+            {experiences.length > 1 && (
+              <button id={styles.delete} onClick={() => delExperience(i)}>
+                Delete
+              </button>
+            )}
+            <button onClick={addExperience}>Add</button>
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
