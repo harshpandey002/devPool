@@ -2,9 +2,12 @@
   padding: 4rem;
   padding-top: 8rem;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
-.content {
+.question {
   width: 70%;
   min-width: 600px;
   margin: 0 auto;
@@ -13,4 +16,29 @@
   border-radius: 8px;
   box-shadow: var(--card-shadow);
   padding: 2rem;
+}
+
+.question > p {
+  color: gray;
+  margin-bottom: 4px;
+}
+
+.skills {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.skills span {
+  padding: 6px 12px;
+  background-color: var(--bg);
+  font-size: 14px;
+  color: gray;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.skills span:hover {
+  background-color: #111111;
 }
