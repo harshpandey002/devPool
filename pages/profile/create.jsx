@@ -3,39 +3,9 @@ import DevForm from "@/components/DevForm";
 import Layout from "@/components/Layout";
 import RecruiterForm from "@/components/RecruiterForm";
 import styles from "@/styles/CreateProfile.module.css";
-import { useRef, useState } from "react";
-import { useForm } from "react-hook-form";
-
-const sampleSkills = [
-  "Reactjs",
-  "Nextjs",
-  "Solidity",
-  "Etherjs",
-  "Hardhat",
-  "Git",
-  "Redux",
-  "Tailwindcss",
-];
-
-const defaultValues = {
-  name: "",
-  portfolio: "",
-  bio: "",
-  about: "",
-};
-
-const expDefaultValues = {
-  companyName: "",
-  jobTitle: "",
-  description: "",
-};
-
-const projDefaultValues = {
-  title: "",
-  projectType: "",
-  techStack: "",
-  description: "",
-};
+import Link from "next/link";
+import { useState } from "react";
+import { BsArrowLeft } from "react-icons/bs";
 
 export default function CreateProfile() {
   const [role, setRole] = useState("Developer");
@@ -44,6 +14,9 @@ export default function CreateProfile() {
     <Layout customHeader={<CustomHeader />}>
       <div className={styles.container}>
         <div className={styles.content}>
+          <Link href="/developers" id={styles.back}>
+            <BsArrowLeft /> Back to developers
+          </Link>
           <div className={styles.roles}>
             {["Developer", "Recruiter"].map((rol) => (
               <span
