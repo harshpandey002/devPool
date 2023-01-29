@@ -21,22 +21,23 @@ const defaultValues = {
   about: "",
 };
 
+const expDefaultValues = {
+  companyName: "",
+  jobTitle: "",
+  description: "",
+};
+
+const projDefaultValues = {
+  title: "",
+  projectType: "",
+  techStack: "",
+  description: "",
+};
+
 export default function CreateProfile() {
   const [skills, setSkills] = useState("");
-  const [experiences, setExperiences] = useState([
-    {
-      companyName: "",
-      jobTitle: "",
-      description: "",
-    },
-  ]);
-  const [projects, setProjects] = useState([
-    {
-      title: "",
-      techStack: "",
-      description: "",
-    },
-  ]);
+  const [experiences, setExperiences] = useState([expDefaultValues]);
+  const [projects, setProjects] = useState([projDefaultValues]);
   const {
     register,
     handleSubmit,
@@ -79,6 +80,7 @@ export default function CreateProfile() {
         </div>
         <Skills skills={skills} setSkills={setSkills} />
         <Experience experiences={experiences} setExperiences={setExperiences} />
+        <Project projects={projects} setProjects={setProjects} />
       </form>
     </Layout>
   );
@@ -117,15 +119,12 @@ function Skills({ skills, setSkills }) {
 }
 
 function Experience({ experiences, setExperiences }) {
-  const addExperience = () => {
-    setExperiences((prev) => [
-      ...prev,
-      {
-        companyName: "",
-        jobTitle: "",
-        description: "",
-      },
-    ]);
+  const addExperience = (i) => {
+    const newExp = JSON.parse(JSON.stringify(experiences));
+
+    newExp.splice(i + 1, 0, expDefaultValues);
+
+    setExperiences(newExp);
   };
 
   const delExperience = (i) => {
@@ -135,32 +134,141 @@ function Experience({ experiences, setExperiences }) {
     setExperiences(newExp);
   };
 
+  const onChange = (e, i) => {
+    const newExp = JSON.parse(JSON.stringify(experiences));
+    newExp[i][e.target.name] = e.target.value;
+
+    setExperiences(newExp);
+  };
+
   return (
     <div className={styles.question}>
       <p>Experiences</p>
-      {experiences.map((exp, i) => (
-        <div key={i} className={styles.experience}>
+      {experiences.map((exp, idx) => (
+        <div key={idx} className={styles.experience}>
           <div className={styles.inputGroup}>
             <div>
               <p>Company Name</p>
-              <input type="text" placeholder="BlockTrain" />
+              <input
+                type="text"
+                onChange={(e) => onChange(e, idx)}
+                value={exp.companyName}
+                name="companyName"
+                placeholder="BlockTrain"
+              />
             </div>
             <div>
               <p>Job Title</p>
-              <input type="text" placeholder="Full-Stack Developer" />
+              <input
+                type="text"
+                onChange={(e) => onChange(e, idx)}
+                value={exp.jobTitle}
+                name="jobTitle"
+                placeholder="Full-Stack Developer"
+              />
             </div>
           </div>
           <div>
             <p>Description</p>
-            <textarea rows={3} />
+            <textarea
+              rows={4}
+              onChange={(e) => onChange(e, idx)}
+              value={exp.description}
+              name="description"
+              placeholder="An educational platform where user can learn everything user need to know about Web3 and Blockchain with a series of articles, in-depth tutorials, structured courses and complete project guides."
+            />
           </div>
           <div className={styles.action}>
             {experiences.length > 1 && (
-              <button id={styles.delete} onClick={() => delExperience(i)}>
+              <button id={styles.delete} onClick={() => delExperience(idx)}>
                 Delete
               </button>
             )}
-            <button onClick={addExperience}>Add</button>
+            <button onClick={() => addExperience(idx)}>Add</button>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function Project({ projects, setProjects }) {
+  const addProject = (i) => {
+    const newProj = JSON.parse(JSON.stringify(projects));
+
+    newProj.splice(i + 1, 0, projDefaultValues);
+
+    setProjects(newProj);
+  };
+
+  const delProject = (i) => {
+    const newProj = JSON.parse(JSON.stringify(projects));
+    newProj.splice(i, 1);
+
+    setProjects(newProj);
+  };
+
+  const onChange = (e, i) => {
+    const newProj = JSON.parse(JSON.stringify(projects));
+    newProj[i][e.target.name] = e.target.value;
+
+    setProjects(newProj);
+  };
+
+  return (
+    <div className={styles.question}>
+      <p>Projects</p>
+      {projects.map((exp, idx) => (
+        <div key={idx} className={styles.experience}>
+          <div className={styles.inputGroup}>
+            <div>
+              <p>Project Title</p>
+              <input
+                type="text"
+                onChange={(e) => onChange(e, idx)}
+                value={exp.title}
+                name="title"
+                placeholder="Dopp"
+              />
+            </div>
+            <div>
+              <p>Project Type</p>
+              <input
+                type="text"
+                onChange={(e) => onChange(e, idx)}
+                value={exp.projectType}
+                name="projectType"
+                placeholder="Crowdfunding Platform"
+              />
+            </div>
+          </div>
+          <div>
+            <p>Tech Stack</p>
+            <input
+              type="text"
+              onChange={(e) => onChange(e, idx)}
+              value={exp.techStack}
+              name="techStack"
+              placeholder="Nextjs, Solidity, Tailwindcss, Firebase"
+            />
+          </div>
+          <div>
+            <p>Description</p>
+            <textarea
+              rows={4}
+              onChange={(e) => onChange(e, idx)}
+              value={exp.description}
+              name="description"
+              placeholder="Designed and Developed this Dapp where user can raise or donate funds to different campaigns of their choice. Payments are done in Goerli Ether."
+            />
+          </div>
+          <div className={styles.action}>
+            {projects.length > 1 && (
+              <button id={styles.delete} onClick={() => delProject(idx)}>
+                Delete
+              </button>
+            )}
+            <button onClick={() => addProject(idx)}>Add</button>
           </div>
         </div>
       ))}
