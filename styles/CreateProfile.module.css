@@ -2,15 +2,43 @@
   padding: 4rem;
   padding-top: 8rem;
   min-height: 100vh;
+}
+
+.content {
+  width: 70%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.roles {
+  display: flex;
+  gap: 20px;
+}
+
+.roles span {
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.roles span:hover {
+  background-color: var(--card-bg);
+}
+
+.activeRole {
+  background-color: var(--card-bg) !important;
+}
+
+.content form {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
 .question {
-  width: 70%;
-  min-width: 600px;
-  margin: 0 auto;
   background-color: var(--card-bg);
   color: white;
   border-radius: 8px;
