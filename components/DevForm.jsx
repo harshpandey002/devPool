@@ -15,9 +15,13 @@ const sampleSkills = [
 
 const defaultValues = {
   name: "",
+  username: "",
   portfolio: "",
   bio: "",
   about: "",
+  twitter: "",
+  linkedin: "",
+  github: "",
 };
 
 const expDefaultValues = {
@@ -63,6 +67,14 @@ export default function DevForm({}) {
         <input type="text" {...register("name")} placeholder="Harsh Pandey" />
       </div>
       <div className={styles.question}>
+        <p>Username</p>
+        <input
+          type="text"
+          {...register("username")}
+          placeholder="harshpandey002"
+        />
+      </div>
+      <div className={styles.question}>
         <p>Portfolio</p>
         <input
           type="url"
@@ -89,6 +101,30 @@ export default function DevForm({}) {
       <Skills skills={skills} setSkills={setSkills} />
       <Experience experiences={experiences} setExperiences={setExperiences} />
       <Project projects={projects} setProjects={setProjects} />
+      <div className={styles.question}>
+        <p>Twitter</p>
+        <input
+          type="url"
+          {...register("twitter")}
+          placeholder="https://twitter.com/harshpandey002"
+        />
+      </div>
+      <div className={styles.question}>
+        <p>Github</p>
+        <input
+          type="url"
+          {...register("github")}
+          placeholder="https://github.com/harshpandey002"
+        />
+      </div>
+      <div className={styles.question}>
+        <p>LinkedIn</p>
+        <input
+          type="url"
+          {...register("linkedin")}
+          placeholder="https://www.linkedin.com/in/harshpandey002/"
+        />
+      </div>
     </form>
   );
 }

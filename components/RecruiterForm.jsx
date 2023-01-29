@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 
 const defaultValues = {
   name: "",
+  username: "",
   companyName: "",
 };
 
@@ -37,6 +38,10 @@ export default function RecruiterForm({}) {
       <div className={styles.question}>
         <p>Name</p>
         <input type="text" {...register("name")} placeholder="Furqan Rydhan" />
+      </div>
+      <div className={styles.question}>
+        <p>Username</p>
+        <input type="text" {...register("username")} placeholder="furqanR" />
       </div>
       <div className={styles.question}>
         <p>Company Name</p>
