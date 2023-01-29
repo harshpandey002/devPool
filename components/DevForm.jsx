@@ -1,5 +1,3 @@
-import CustomHeader from "@/components/CustomHeader";
-import Layout from "@/components/Layout";
 import styles from "@/styles/CreateProfile.module.css";
 import { useState } from "react";
 import { useForm } from "react-hook-form";

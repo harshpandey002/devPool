@@ -1,6 +1,7 @@
 import CustomHeader from "@/components/CustomHeader";
 import DevForm from "@/components/DevForm";
 import Layout from "@/components/Layout";
+import RecruiterForm from "@/components/RecruiterForm";
 import styles from "@/styles/CreateProfile.module.css";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -54,7 +55,7 @@ export default function CreateProfile() {
               </span>
             ))}
           </div>
-          {role === "Developer" ? <DevForm /> : <></>}
+          {role === "Developer" ? <DevForm /> : <RecruiterForm />}
         </div>
       </div>
     </Layout>
