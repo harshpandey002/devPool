@@ -16,6 +16,7 @@ const sampleSkills = [
 const defaultValues = {
   name: "",
   username: "",
+  email: "",
   portfolio: "",
   bio: "",
   about: "",
@@ -72,6 +73,14 @@ export default function DevForm({}) {
           type="text"
           {...register("username")}
           placeholder="harshpandey002"
+        />
+      </div>
+      <div className={styles.question}>
+        <p>Email</p>
+        <input
+          type="text"
+          {...register("email")}
+          placeholder="coding.harshp@gmail.com"
         />
       </div>
       <div className={styles.question}>
