@@ -54,7 +54,7 @@ export default function Developers() {
         </div>
         {activeDevId && (
           <div className={styles.right}>
-            <Developer developer={activeDeveloper} />
+            <Developer data={activeDeveloper} />
           </div>
         )}
       </div>

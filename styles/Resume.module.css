@@ -1,0 +1,15 @@
+.container {
+  padding-block: 4rem;
+  width: 90%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+#back {
+  width: max-content;
+  color: var(--link);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 1rem;
+}

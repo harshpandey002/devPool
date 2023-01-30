@@ -1,16 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
-import React from "react";
 import styles from "@/styles/DeveloperDetail.module.css";
+import { AiFillGithub, AiOutlineLink, AiOutlineTwitter } from "react-icons/ai";
 import { BiLinkExternal } from "react-icons/bi";
 import { FaLinkedinIn } from "react-icons/fa";
-import {
-  AiFillGithub,
-  AiFillInstagram,
-  AiOutlineTwitter,
-} from "react-icons/ai";
 
-export default function Developer({ developer }) {
-  const { name, email, website, address, company } = developer;
+export default function Developer({ data }) {
+  const { name, email, website, address, company } = data;
 
   return (
     <div className={styles.container}>
@@ -30,9 +25,9 @@ export default function Developer({ developer }) {
           <div className={styles.cta}>
             <span className={styles.socials}>
               <FaLinkedinIn className={styles.icon} />
-              <AiFillInstagram className={styles.icon} />
               <AiOutlineTwitter className={styles.icon} />
               <AiFillGithub className={styles.icon} />
+              <AiOutlineLink className={styles.icon} />
             </span>
             <button>Approach</button>
           </div>

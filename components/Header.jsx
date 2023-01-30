@@ -6,9 +6,13 @@ import Link from "next/link";
 export default function Header() {
   return (
     <div className={styles.header}>
-      <h1>Dev Pool</h1>
+      <Link href="/developers">
+        <h1>Dev Pool</h1>
+      </Link>
       <ul>
-        <li>Developers</li>
+        <Link href="/developers">
+          <li>Developers</li>
+        </Link>
         <li>Inbox</li>
         <Link href="/profile/create">
           <li>
