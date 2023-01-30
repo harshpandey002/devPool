@@ -8,7 +8,6 @@
   border-radius: 8px;
   box-shadow: var(--card-shadow);
   height: max-content;
-  color: white;
 }
 
 .basic {

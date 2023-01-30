@@ -26,7 +26,6 @@
 }
 
 .roles span {
-  color: white;
   padding: 1rem 2rem;
   border-radius: 8px;
   cursor: pointer;
@@ -49,7 +48,6 @@
 
 .question {
   background-color: var(--card-bg);
-  color: white;
   border-radius: 8px;
   box-shadow: var(--card-shadow);
   padding: 2rem;
