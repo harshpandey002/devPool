@@ -6,7 +6,7 @@ import Link from "next/link";
 export default function CustomHeader({ formRef }) {
   return (
     <div className={styles.header}>
-      <Link href="/developers">
+      <Link href="/">
         <h1>Dev Pool</h1>
       </Link>
       <ul>
