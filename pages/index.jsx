@@ -3,6 +3,7 @@ import Layout from "@/components/Layout";
 import { useEffect } from "react";
 import styles from "@/styles/Home.module.css";
 import ConnectWallet from "@/components/ConnectWallet";
+import { useNetwork, useSwitchNetwork } from "wagmi";
 
 export default function Home() {
   return (

@@ -14,7 +14,7 @@ export default function Header() {
           <li>Developers</li>
         </Link>
         <li>Inbox</li>
-        <Link href="/profile/create">
+        <Link href="/create">
           <li>
             <button>Create Profile</button>
           </li>
