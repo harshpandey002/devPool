@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import useIsMounted from "hooks/useIsMounted";
+import { useEffect } from "react";
 import {
   useAccount,
   useConnect,
@@ -18,11 +19,17 @@ export default function ConnectWallet() {
     useConnect();
   const connector = connectors[0];
 
-  console.log(connector);
+  console.log(!connector.ready);
+
+  useEffect(() => {
+    console.log(connector);
+  }, [connector]);
+
+  if (!mounted) return null;
 
   return (
     <>
-      {mounted && isConnected ? (
+      {isConnected ? (
         <div>
           <button suppressHydrationWarning onClick={disconnect}>
             Disconnect
@@ -35,7 +42,6 @@ export default function ConnectWallet() {
             suppressHydrationWarning
             disabled={!connector.ready}
             onClick={() => {
-              console.log("Clicked");
               connect({ connector });
             }}
           >
