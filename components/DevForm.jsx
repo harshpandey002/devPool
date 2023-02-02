@@ -1,7 +1,11 @@
 import styles from "@/styles/CreateProfile.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { ThirdwebStorage } from "@thirdweb-dev/storage";
+import { useContractWrite, usePrepareContractWrite } from "wagmi";
+import { CONTRACT_ADDRESS } from "@/helpers/constants";
+import contractAbi from "@/abi/abi.json";
+import useIsMounted from "@/hooks/useIsMounted";
 
 const sampleSkills = [
   "Reactjs",
@@ -14,54 +18,57 @@ const sampleSkills = [
   "Tailwindcss",
 ];
 
-const defaultValues = {
-  name: "Yash Pandey",
-  username: "yashpandey",
-  email: "yashkumarpandey@gmail.com",
-  portfolio: "https://yashpandey.com",
-  bio: "Intraday Trading | Investing | Guitar",
-  about:
-    "Hi, I'm 24. I'm a full-time trader and investor. Trading is not just my job, it's my passion. I love the thrill of making quick, informed decisions and watching the market react. When I'm not in front of my computer, I like to unwind by playing my guitar and smoking a cigarette.",
-  linkedin: "https://www.linkedin.com/in/yash-pandey-3298ab172/",
-};
-
-// const defaultValues = {
-//   name: "Harsh Pandey",
-//   username: "harshpandey002",
-//   email: "coding.harshp@gmail.com",
-//   portfolio: "https://harshkumarpandey.com",
-//   bio: "Building https://blocktrain.info | Full-Stack | Blockchain Developer | Content Writer | Trader & Investor",
-//   about:
-//     "I’m a Front-End web3 developer with over two years of development experience with Reactjs/Nextjs. I'm perticulary good at developing responsive user interfaces for web-based applications with a focus on secure and smooth user experience.",
-//   twitter: "https://twitter.com/harshpandey002",
-//   linkedin: "https://www.linkedin.com/in/harshpandey002/",
-//   github: "https://github.com/harshpandey002",
-// };
+const getDefaultValues = (user) => ({
+  name: user?.name || "",
+  username: user?.username || "",
+  email: user?.email || "",
+  portfolio: user?.portfolio || "",
+  bio: user?.bio || "",
+  about: user?.about || "",
+  twitter: user?.twitter || "",
+  linkedin: user?.linkedin || "",
+  github: user?.github || "",
+});
 
 const expDefaultValues = {
-  companyName: "BlockTrain",
-  jobTitle: "Full-Stack Developer",
-  description: "company description or what?",
+  companyName: "",
+  jobTitle: "",
+  description: "",
 };
 
 const projDefaultValues = {
-  title: "Dopp",
-  projectType: "Crowdfunding Platform",
-  techStack: "Nextjs, Solidity, Tailwindcss, Firebase",
-  description: "Project description or what?",
+  title: "",
+  projectType: "",
+  techStack: "",
+  description: "",
 };
 
-export default function DevForm({ userId }) {
+export default function DevForm({ userId, user }) {
   const [skills, setSkills] = useState("Reactjs, Nextjs, Solidity");
   const [experiences, setExperiences] = useState([expDefaultValues]);
   const [projects, setProjects] = useState([projDefaultValues]);
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm({ defaultValues });
+  const { register, handleSubmit, reset, getValues } = useForm({
+    defaultValues: getDefaultValues(user),
+  });
   const storage = new ThirdwebStorage();
+
+  const { config } = usePrepareContractWrite({
+    address: CONTRACT_ADDRESS,
+    abi: contractAbi,
+    functionName: "updateUser",
+    args: [user?.id, {}],
+  });
+
+  const { data, isLoading, isSuccess, write } = useContractWrite(config);
+
+  useEffect(() => {
+    if (!user?.username) return;
+
+    setSkills(user?.skills || "");
+    setProjects(user?.projects || projDefaultValues);
+    setExperiences(user?.experiences || expDefaultValues);
+    reset(getDefaultValues(user));
+  }, [user]);
 
   const onSubmit = async (data) => {
     const formData = {
@@ -76,7 +83,12 @@ export default function DevForm({ userId }) {
     const uri = await storage.upload(formData);
     const url = storage.resolveScheme(uri);
     console.log(url);
+
+    const txn = await write?.(user.id, formData);
+    console.log(txn);
   };
+
+  console.log();
 
   return (
     <form id="createProfile" onSubmit={handleSubmit(onSubmit)}>

@@ -1,13 +1,13 @@
 import styles from "@/styles/CreateProfile.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { ThirdwebStorage } from "@thirdweb-dev/storage";
 
-const defaultValues = {
-  name: "",
-  username: "",
-  companyName: "",
-};
+const getDefaultValues = (user) => ({
+  name: user?.name || "",
+  username: user?.username || "",
+  companyName: user?.companyName || "",
+});
 
 const jobsDefaultValues = {
   jobDescription: "",
@@ -15,15 +15,19 @@ const jobsDefaultValues = {
   skills: "",
 };
 
-export default function RecruiterForm({ userId }) {
+export default function RecruiterForm({ userId, user }) {
   const [jobs, setJobs] = useState([jobsDefaultValues]);
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm({ defaultValues });
+  const { register, handleSubmit, reset } = useForm({
+    defaultValues: getDefaultValues(user),
+  });
   const storage = new ThirdwebStorage();
+
+  useEffect(() => {
+    if (!user?.username) return;
+
+    setJobs(user?.jobs || jobsDefaultValues);
+    reset(getDefaultValues(user));
+  }, [user]);
 
   const onSubmit = async (data) => {
     const formData = {
@@ -83,7 +87,7 @@ function Jobs({ jobs, setJobs }) {
   return (
     <div className={styles.question}>
       <p>Jobs</p>
-      {jobs.map((job, idx) => (
+      {[jobs]?.map((job, idx) => (
         <div key={idx} className={styles.experience}>
           <div className={styles.inputGroup}>
             <div>
