@@ -4,12 +4,14 @@ import { useEffect } from "react";
 import styles from "@/styles/Home.module.css";
 import ConnectWallet from "@/components/ConnectWallet";
 import { useNetwork, useSwitchNetwork } from "wagmi";
+import NetworkWarning from "@/components/NetworkWarning";
 
 export default function Home() {
   return (
     <Layout customHeader={<></>}>
       <div className={styles.container}>
         <ConnectWallet />
+        <NetworkWarning />
       </div>
     </Layout>
   );
