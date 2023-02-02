@@ -1,6 +1,7 @@
 import styles from "@/styles/CreateProfile.module.css";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { ThirdwebStorage } from "@thirdweb-dev/storage";
 
 const defaultValues = {
   name: "",
@@ -22,15 +23,18 @@ export default function RecruiterForm({}) {
     watch,
     formState: { errors },
   } = useForm({ defaultValues });
+  const storage = new ThirdwebStorage();
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     const formData = {
       ...data,
       role: "recruiter",
       jobs,
     };
 
-    console.log(formData);
+    const uri = await storage.upload(formData);
+    const url = storage.resolveScheme(uri);
+    console.log(url);
   };
 
   return (

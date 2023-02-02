@@ -1,6 +1,7 @@
 import styles from "@/styles/CreateProfile.module.css";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { ThirdwebStorage } from "@thirdweb-dev/storage";
 
 const sampleSkills = [
   "Reactjs",
@@ -14,32 +15,33 @@ const sampleSkills = [
 ];
 
 const defaultValues = {
-  name: "",
-  username: "",
-  email: "",
-  portfolio: "",
-  bio: "",
-  about: "",
-  twitter: "",
-  linkedin: "",
-  github: "",
+  name: "Harsh Pandey",
+  username: "harshpandey002",
+  email: "coding.harshp@gmail.com",
+  portfolio: "https://harshkumarpandey.com",
+  bio: "Building https://blocktrain.info | Full-Stack | Blockchain Developer | Content Writer | Trader & Investor",
+  about:
+    "I’m a Front-End web3 developer with over two years of development experience with Reactjs/Nextjs. I'm perticulary good at developing responsive user interfaces for web-based applications with a focus on secure and smooth user experience.",
+  twitter: "https://twitter.com/harshpandey002",
+  linkedin: "https://www.linkedin.com/in/harshpandey002/",
+  github: "https://github.com/harshpandey002",
 };
 
 const expDefaultValues = {
-  companyName: "",
-  jobTitle: "",
-  description: "",
+  companyName: "BlockTrain",
+  jobTitle: "Full-Stack Developer",
+  description: "company description or what?",
 };
 
 const projDefaultValues = {
-  title: "",
-  projectType: "",
-  techStack: "",
-  description: "",
+  title: "Dopp",
+  projectType: "Crowdfunding Platform",
+  techStack: "Nextjs, Solidity, Tailwindcss, Firebase",
+  description: "Project description or what?",
 };
 
 export default function DevForm({}) {
-  const [skills, setSkills] = useState("");
+  const [skills, setSkills] = useState("Reactjs, Nextjs, Solidity");
   const [experiences, setExperiences] = useState([expDefaultValues]);
   const [projects, setProjects] = useState([projDefaultValues]);
   const {
@@ -48,8 +50,9 @@ export default function DevForm({}) {
     watch,
     formState: { errors },
   } = useForm({ defaultValues });
+  const storage = new ThirdwebStorage();
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     const formData = {
       ...data,
       role: "developer",
@@ -58,7 +61,9 @@ export default function DevForm({}) {
       projects,
     };
 
-    console.log(formData);
+    const uri = await storage.upload(formData);
+    const url = storage.resolveScheme(uri);
+    console.log(url);
   };
 
   return (
@@ -104,7 +109,7 @@ export default function DevForm({}) {
         <textarea
           rows={5}
           {...register("about")}
-          placeholder="I’m a Front-End web3 developer with over two years of development experience with Reactjs/Nextjs. I'm perticulary good at developing responsive user interfaces for web-based applications with a focus on secure and smooth user experience."
+          placeholder="I’m a Front-End web3 developer with over two years of development experience with Reactjs/Nextjs. I'm particularly good at developing responsive user interfaces for web-based applications with a focus on secure and smooth user experience."
         />
       </div>
       <Skills skills={skills} setSkills={setSkills} />
