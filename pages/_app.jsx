@@ -4,6 +4,7 @@ import { publicProvider } from "wagmi/providers/public";
 import { MetaMaskConnector } from "wagmi/connectors/metaMask";
 
 import "../styles/globals.css";
+import NetworkWarning from "@/components/NetworkWarning";
 
 // Configure chains & providers with the Alchemy provider.
 // Two popular providers are Alchemy (alchemy.com) and Infura (infura.io)
@@ -27,6 +28,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <WagmiConfig client={client}>
       <Component {...pageProps} />
+      <NetworkWarning />
     </WagmiConfig>
   );
 }

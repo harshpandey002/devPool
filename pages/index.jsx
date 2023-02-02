@@ -11,7 +11,6 @@ export default function Home() {
     <Layout customHeader={<></>}>
       <div className={styles.container}>
         <ConnectWallet />
-        <NetworkWarning />
       </div>
     </Layout>
   );
