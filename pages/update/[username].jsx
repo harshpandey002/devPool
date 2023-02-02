@@ -27,6 +27,7 @@ export default function CreateProfile() {
   const [role, setRole] = useState("Developer");
 
   useEffect(() => {
+    if (!userURL) return;
     getUserDetails();
   }, [userURL]);
 
