@@ -6,9 +6,21 @@ import styles from "@/styles/CreateProfile.module.css";
 import Link from "next/link";
 import { useState } from "react";
 import { BsArrowLeft } from "react-icons/bs";
+import { useContractRead } from "wagmi";
+import contractABI from "@/abi/abi.json";
+import { CONTRACT_ADDRESS } from "@/helpers/constants";
+
+const getUserCountConfig = {
+  address: CONTRACT_ADDRESS,
+  abi: contractABI,
+  functionName: "userCount",
+};
 
 export default function CreateProfile() {
   const [role, setRole] = useState("Developer");
+  const { data: userCount } = useContractRead(getUserCountConfig);
+
+  const userId = userCount?.toNumber();
 
   return (
     <Layout customHeader={<CustomHeader />}>
@@ -28,7 +40,11 @@ export default function CreateProfile() {
               </span>
             ))}
           </div>
-          {role === "Developer" ? <DevForm /> : <RecruiterForm />}
+          {role === "Developer" ? (
+            <DevForm userId={userId} />
+          ) : (
+            <RecruiterForm userId={userId} />
+          )}
         </div>
       </div>
     </Layout>

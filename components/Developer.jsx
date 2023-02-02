@@ -5,7 +5,7 @@ import { BiLinkExternal } from "react-icons/bi";
 import { FaLinkedinIn } from "react-icons/fa";
 
 export default function Developer({ data }) {
-  const { name, email, website, address, company } = data;
+  const { name, email, portfolio, bio, skills } = data;
 
   return (
     <div className={styles.container}>
@@ -18,9 +18,9 @@ export default function Developer({ data }) {
         </div>
         <div className={styles.info}>
           <h4>{name}</h4>
-          <p>{company.catchPhrase}</p>
+          <p>{bio}</p>
           <a>
-            {website} <BiLinkExternal />
+            {portfolio} <BiLinkExternal />
           </a>
           <div className={styles.cta}>
             <span className={styles.socials}>
@@ -34,11 +34,9 @@ export default function Developer({ data }) {
         </div>
       </div>
       <div className={styles.skills}>
-        {["Reactjs", "Nextjs", "Hardhat", "Etherjs", "Redux", "Electonjs"].map(
-          (skill, _i) => (
-            <span key={_i}>{skill}</span>
-          )
-        )}
+        {skills.split(",").map((skill, _i) => (
+          <span key={_i}>{skill}</span>
+        ))}
       </div>
       <div className={styles.experience}>
         <p>Experiences</p>

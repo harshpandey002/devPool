@@ -4,55 +4,83 @@ import styles from "@/styles/Developers.module.css";
 import { BiLinkExternal } from "react-icons/bi";
 import Layout from "@/components/Layout";
 import Developer from "@/components/Developer";
+import { useContract, useContractRead, useProvider } from "wagmi";
+import contractABI from "@/abi/abi.json";
+import { CONTRACT_ADDRESS } from "@/helpers/constants";
+
+const getUserCountConfig = {
+  address: CONTRACT_ADDRESS,
+  abi: contractABI,
+  functionName: "userCount",
+};
 
 export default function Developers() {
   const [developers, setDevelopers] = useState([]);
-  const [activeDevId, setActiveDevId] = useState();
+  const [activeDev, setActiveDev] = useState();
+  const provider = useProvider();
+
+  const { data: userCount } = useContractRead(getUserCountConfig);
+  const contract = useContract({
+    address: "0xbBc18f32E67304b2FB39bed2CB2f211eBBF030cB",
+    abi: contractABI,
+    signerOrProvider: provider,
+  });
 
   useEffect(() => {
-    getDevelopers();
-  }, []);
+    if (!userCount) return;
 
-  const handleClick = (id) => {
-    setActiveDevId(id);
-    // let timer;
-    // timer = setTimeout(() => {
-    //   clearTimeout(timer);
-    //   setActiveDevId(false);
-    // }, 2000);
+    getDevelopers();
+  }, [userCount?.toNumber()]);
+
+  const handleClick = (username) => {
+    setActiveDev(username);
   };
 
   async function getDevelopers() {
     try {
-      const res = await fetch("https://jsonplaceholder.typicode.com/users");
-      const data = await res.json();
-      setDevelopers(data);
+      const promises = [];
+
+      for (let i = 0; i < userCount; i++) {
+        promises.push(contract.users(i));
+      }
+
+      const res = await Promise.all(promises);
+      const promisesCid = res.map((each) => fetch(each));
+
+      const devsData = await Promise.all(promisesCid);
+      const devsPromise = devsData.map((devs) => devs.json());
+
+      const devs = await Promise.all(devsPromise);
+
+      setDevelopers(devs);
     } catch (error) {
       console.log(error);
     }
   }
 
-  const activeDeveloper = developers.filter((dev) => dev.id === activeDevId)[0];
+  const activeDeveloper = developers.filter(
+    (dev) => dev.username === activeDev
+  )[0];
 
   return (
     <Layout>
       <div className={styles.container}>
         <div
-          style={{ width: activeDevId ? "55%" : "100%" }}
+          style={{ width: activeDev ? "55%" : "100%" }}
           className={styles.left}
         >
           <div className={styles.cards}>
             {developers.map((developer) => (
               <DevCard
                 handleClick={handleClick}
-                key={developers.id}
+                key={developers.username}
                 developer={developer}
-                activedevId={activeDevId}
+                activedev={activeDev}
               />
             ))}
           </div>
         </div>
-        {activeDevId && (
+        {activeDev && (
           <div className={styles.right}>
             <Developer data={activeDeveloper} />
           </div>
@@ -62,26 +90,27 @@ export default function Developers() {
   );
 }
 
-function DevCard({ developer, handleClick, activeDevId }) {
-  const { id, name, email, website, address, company } = developer;
-  const { street, suite, city } = address;
+function DevCard({ developer, handleClick, activeDev }) {
+  const { username, name, email, portfolio, bio } = developer;
 
   return (
     <div
-      onClick={() => handleClick(id)}
-      className={`${styles.card} ${activeDevId == id ? styles.activeDev : ""}`}
+      onClick={() => handleClick(username)}
+      className={`${styles.card} ${
+        activeDev == username ? styles.activeDev : ""
+      }`}
     >
       <img
         src={`https://api.dicebear.com/5.x/avataaars/svg?seed=${name}`}
-        alt=""
+        alt={name}
       />
       <div className={styles.basic}>
         <h2>{name}</h2>
         <a>
-          {website} <BiLinkExternal />
+          {portfolio} <BiLinkExternal />
         </a>
         <p>{email}</p>
-        <p>{company.catchPhrase}</p>
+        <p>{bio}</p>
       </div>
     </div>
   );

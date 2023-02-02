@@ -15,7 +15,7 @@ const jobsDefaultValues = {
   skills: "",
 };
 
-export default function RecruiterForm({}) {
+export default function RecruiterForm({ userId }) {
   const [jobs, setJobs] = useState([jobsDefaultValues]);
   const {
     register,
@@ -27,8 +27,9 @@ export default function RecruiterForm({}) {
 
   const onSubmit = async (data) => {
     const formData = {
-      ...data,
+      id: userId,
       role: "recruiter",
+      ...data,
       jobs,
     };
 

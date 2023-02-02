@@ -15,17 +15,28 @@ const sampleSkills = [
 ];
 
 const defaultValues = {
-  name: "Harsh Pandey",
-  username: "harshpandey002",
-  email: "coding.harshp@gmail.com",
-  portfolio: "https://harshkumarpandey.com",
-  bio: "Building https://blocktrain.info | Full-Stack | Blockchain Developer | Content Writer | Trader & Investor",
+  name: "Yash Pandey",
+  username: "yashpandey",
+  email: "yashkumarpandey@gmail.com",
+  portfolio: "https://yashpandey.com",
+  bio: "Intraday Trading | Investing | Guitar",
   about:
-    "I’m a Front-End web3 developer with over two years of development experience with Reactjs/Nextjs. I'm perticulary good at developing responsive user interfaces for web-based applications with a focus on secure and smooth user experience.",
-  twitter: "https://twitter.com/harshpandey002",
-  linkedin: "https://www.linkedin.com/in/harshpandey002/",
-  github: "https://github.com/harshpandey002",
+    "Hi, I'm 24. I'm a full-time trader and investor. Trading is not just my job, it's my passion. I love the thrill of making quick, informed decisions and watching the market react. When I'm not in front of my computer, I like to unwind by playing my guitar and smoking a cigarette.",
+  linkedin: "https://www.linkedin.com/in/yash-pandey-3298ab172/",
 };
+
+// const defaultValues = {
+//   name: "Harsh Pandey",
+//   username: "harshpandey002",
+//   email: "coding.harshp@gmail.com",
+//   portfolio: "https://harshkumarpandey.com",
+//   bio: "Building https://blocktrain.info | Full-Stack | Blockchain Developer | Content Writer | Trader & Investor",
+//   about:
+//     "I’m a Front-End web3 developer with over two years of development experience with Reactjs/Nextjs. I'm perticulary good at developing responsive user interfaces for web-based applications with a focus on secure and smooth user experience.",
+//   twitter: "https://twitter.com/harshpandey002",
+//   linkedin: "https://www.linkedin.com/in/harshpandey002/",
+//   github: "https://github.com/harshpandey002",
+// };
 
 const expDefaultValues = {
   companyName: "BlockTrain",
@@ -40,7 +51,7 @@ const projDefaultValues = {
   description: "Project description or what?",
 };
 
-export default function DevForm({}) {
+export default function DevForm({ userId }) {
   const [skills, setSkills] = useState("Reactjs, Nextjs, Solidity");
   const [experiences, setExperiences] = useState([expDefaultValues]);
   const [projects, setProjects] = useState([projDefaultValues]);
@@ -54,8 +65,9 @@ export default function DevForm({}) {
 
   const onSubmit = async (data) => {
     const formData = {
-      ...data,
+      id: userId,
       role: "developer",
+      ...data,
       skills,
       experiences,
       projects,
