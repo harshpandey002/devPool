@@ -4,27 +4,16 @@ import styles from "@/styles/Developers.module.css";
 import { BiLinkExternal } from "react-icons/bi";
 import Layout from "@/components/Layout";
 import Developer from "@/components/Developer";
-import { useContract, useContractRead, useProvider } from "wagmi";
-import contractABI from "@/abi/abi.json";
-import { CONTRACT_ADDRESS } from "@/helpers/constants";
+import { useContract, useContractRead } from "@thirdweb-dev/react";
 
-const getUserCountConfig = {
-  address: CONTRACT_ADDRESS,
-  abi: contractABI,
-  functionName: "userCount",
-};
+import { CONTRACT_ADDRESS } from "@/helpers/constants";
 
 export default function Developers() {
   const [developers, setDevelopers] = useState([]);
   const [activeDev, setActiveDev] = useState();
-  const provider = useProvider();
 
-  const { data: userCount } = useContractRead(getUserCountConfig);
-  const contract = useContract({
-    address: "0xbBc18f32E67304b2FB39bed2CB2f211eBBF030cB",
-    abi: contractABI,
-    signerOrProvider: provider,
-  });
+  const { contract } = useContract(CONTRACT_ADDRESS);
+  const { data: userCount } = useContractRead(contract, "userCount");
 
   useEffect(() => {
     if (!userCount) return;
@@ -40,8 +29,8 @@ export default function Developers() {
     try {
       const promises = [];
 
-      for (let i = 0; i < userCount; i++) {
-        promises.push(contract.users(i));
+      for (let i = 0; i < userCount.toNumber(); i++) {
+        promises.push(contract.call("users", i));
       }
 
       const res = await Promise.all(promises);
@@ -62,6 +51,8 @@ export default function Developers() {
     (dev) => dev.username === activeDev
   )[0];
 
+  const DEVELOPERS = developers.filter((dev) => dev.role === "developer");
+
   return (
     <Layout>
       <div className={styles.container}>
@@ -70,7 +61,7 @@ export default function Developers() {
           className={styles.left}
         >
           <div className={styles.cards}>
-            {developers.map((developer) => (
+            {DEVELOPERS.map((developer) => (
               <DevCard
                 handleClick={handleClick}
                 key={developers.username}

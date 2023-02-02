@@ -1,7 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import useIsMounted from "hooks/useIsMounted";
 import { useEffect, useState } from "react";
-import { useNetwork, useSwitchNetwork } from "wagmi";
 
 export default function NetworkWarning() {
   const [wrongNetwork, setWrongNetwork] = useState(false);

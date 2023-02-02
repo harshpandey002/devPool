@@ -1,14 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
-import ConnectWallet from "@/components/ConnectWallet";
 import Layout from "@/components/Layout";
 import styles from "@/styles/Home.module.css";
-import { ThirdwebStorage } from "@thirdweb-dev/storage";
+import { ConnectWallet } from "@thirdweb-dev/react";
 
 export default function Home() {
   return (
     <Layout customHeader={<></>}>
       <div className={styles.container}>
-        <ConnectWallet />
+        <ConnectWallet accentColor="#0d52a7" />
       </div>
     </Layout>
   );

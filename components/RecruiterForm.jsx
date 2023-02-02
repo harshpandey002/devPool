@@ -2,6 +2,9 @@ import styles from "@/styles/CreateProfile.module.css";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { ThirdwebStorage } from "@thirdweb-dev/storage";
+import { CONTRACT_ADDRESS } from "@/helpers/constants";
+import { useRouter } from "next/router";
+import { useContract, useContractWrite } from "@thirdweb-dev/react";
 
 const getDefaultValues = (user) => ({
   name: user?.name || "",
@@ -22,10 +25,16 @@ export default function RecruiterForm({ userId, user }) {
   });
   const storage = new ThirdwebStorage();
 
+  const router = useRouter();
+
+  const { contract } = useContract(CONTRACT_ADDRESS);
+  const { mutateAsync: updateUser } = useContractWrite(contract, "updateUser");
+  const { mutateAsync: createUser } = useContractWrite(contract, "newUser");
+
   useEffect(() => {
     if (!user?.username) return;
 
-    setJobs(user?.jobs || jobsDefaultValues);
+    setJobs(user?.jobs || [jobsDefaultValues]);
     reset(getDefaultValues(user));
   }, [user]);
 
@@ -37,9 +46,19 @@ export default function RecruiterForm({ userId, user }) {
       jobs,
     };
 
-    const uri = await storage.upload(formData);
-    const url = storage.resolveScheme(uri);
-    console.log(url);
+    try {
+      const uri = await storage.upload(formData);
+      const url = storage.resolveScheme(uri);
+
+      if (user) {
+        await updateUser([user.id, url]);
+      } else {
+        await createUser([formData.username, url]);
+      }
+      router.push(`/developers/${formData.username}`);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -54,7 +73,11 @@ export default function RecruiterForm({ userId, user }) {
       </div>
       <div className={styles.question}>
         <p>Company Name</p>
-        <input type="url" {...register("companyName")} placeholder="Thirdweb" />
+        <input
+          type="text"
+          {...register("companyName")}
+          placeholder="Thirdweb"
+        />
       </div>
       <Jobs jobs={jobs} setJobs={setJobs} />
     </form>
@@ -87,7 +110,7 @@ function Jobs({ jobs, setJobs }) {
   return (
     <div className={styles.question}>
       <p>Jobs</p>
-      {[jobs]?.map((job, idx) => (
+      {jobs?.map((job, idx) => (
         <div key={idx} className={styles.experience}>
           <div className={styles.inputGroup}>
             <div>

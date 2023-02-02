@@ -1,18 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "@/styles/Layout.module.css";
 import Header from "./Header";
 import { useRouter } from "next/router";
-import { useAccount, useNetwork } from "wagmi";
-import useIsMounted from "hooks/useIsMounted";
+import { useAddress } from "@thirdweb-dev/react";
 
 export default function Layout({ children, customHeader }) {
   const router = useRouter();
-  const { address, isConnecting, isDisconnected } = useAccount();
-  const mounted = useIsMounted();
+  const address = useAddress();
 
-  if (mounted && router.asPath != "/" && !address) {
-    router.push("/");
-  }
+  // useEffect(() => {
+  //   if (address === undefined) return;
+  //   if (router.asPath != "/" && !address) {
+  //     router.push("/");
+  //   }
+  // }, [address]);
 
   return (
     <div className={styles.wrapper}>

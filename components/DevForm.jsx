@@ -2,10 +2,10 @@ import styles from "@/styles/CreateProfile.module.css";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { ThirdwebStorage } from "@thirdweb-dev/storage";
-import { useContractWrite, usePrepareContractWrite } from "wagmi";
 import { CONTRACT_ADDRESS } from "@/helpers/constants";
 import contractAbi from "@/abi/abi.json";
-import useIsMounted from "@/hooks/useIsMounted";
+import { useContract, useContractWrite } from "@thirdweb-dev/react";
+import { useRouter } from "next/router";
 
 const sampleSkills = [
   "Reactjs",
@@ -44,7 +44,7 @@ const projDefaultValues = {
 };
 
 export default function DevForm({ userId, user }) {
-  const [skills, setSkills] = useState("Reactjs, Nextjs, Solidity");
+  const [skills, setSkills] = useState("");
   const [experiences, setExperiences] = useState([expDefaultValues]);
   const [projects, setProjects] = useState([projDefaultValues]);
   const { register, handleSubmit, reset, getValues } = useForm({
@@ -52,21 +52,18 @@ export default function DevForm({ userId, user }) {
   });
   const storage = new ThirdwebStorage();
 
-  const { config } = usePrepareContractWrite({
-    address: CONTRACT_ADDRESS,
-    abi: contractAbi,
-    functionName: "updateUser",
-    args: [user?.id, {}],
-  });
+  const router = useRouter();
 
-  const { data, isLoading, isSuccess, write } = useContractWrite(config);
+  const { contract } = useContract(CONTRACT_ADDRESS);
+  const { mutateAsync: updateUser } = useContractWrite(contract, "updateUser");
+  const { mutateAsync: createUser } = useContractWrite(contract, "newUser");
 
   useEffect(() => {
     if (!user?.username) return;
 
     setSkills(user?.skills || "");
-    setProjects(user?.projects || projDefaultValues);
-    setExperiences(user?.experiences || expDefaultValues);
+    setProjects(user?.projects || [projDefaultValues]);
+    setExperiences(user?.experiences || [expDefaultValues]);
     reset(getDefaultValues(user));
   }, [user]);
 
@@ -80,15 +77,20 @@ export default function DevForm({ userId, user }) {
       projects,
     };
 
-    const uri = await storage.upload(formData);
-    const url = storage.resolveScheme(uri);
-    console.log(url);
+    try {
+      const uri = await storage.upload(formData);
+      const url = storage.resolveScheme(uri);
 
-    const txn = await write?.(user.id, formData);
-    console.log(txn);
+      if (user) {
+        await updateUser([user.id, url]);
+      } else {
+        await createUser([formData.username, url]);
+      }
+      router.push(`/developers/${formData.username}`);
+    } catch (error) {
+      console.log(error);
+    }
   };
-
-  console.log();
 
   return (
     <form id="createProfile" onSubmit={handleSubmit(onSubmit)}>

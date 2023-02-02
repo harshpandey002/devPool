@@ -6,21 +6,22 @@ import styles from "@/styles/CreateProfile.module.css";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { BsArrowLeft } from "react-icons/bs";
-import { useContractRead } from "wagmi";
 import contractABI from "@/abi/abi.json";
 import { CONTRACT_ADDRESS } from "@/helpers/constants";
 import { toTitleCase } from "@/helpers/functions";
 import { useRouter } from "next/router";
+import { useContract, useContractRead } from "@thirdweb-dev/react";
 
 export default function CreateProfile() {
   const router = useRouter();
   const username = router.query.username;
-  const { data: userURL } = useContractRead({
-    address: CONTRACT_ADDRESS,
-    abi: contractABI,
-    functionName: "userByUsername",
-    args: [username],
-  });
+
+  const { contract } = useContract(CONTRACT_ADDRESS);
+  const { data: userURL } = useContractRead(
+    contract,
+    "userByUsername",
+    username
+  );
 
   const [user, setUser] = useState(null);
   const [role, setRole] = useState("Developer");
