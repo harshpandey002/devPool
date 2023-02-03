@@ -13,7 +13,9 @@ export default function Header() {
         <Link href="/developers">
           <li>Developers</li>
         </Link>
-        <li>Inbox</li>
+        <Link href="/inbox">
+          <li>Inbox</li>
+        </Link>
         <Link href="/create">
           <li>
             <button>Create Profile</button>

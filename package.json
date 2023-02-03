@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@pushprotocol/restapi": "^0.3.2",
     "@thirdweb-dev/react": "^3.7.3",
     "@thirdweb-dev/sdk": "^3.7.3",
     "@thirdweb-dev/storage": "^1.0.6",
