@@ -133,3 +133,32 @@
   margin-top: 12px;
   color: #dcdcdc;
 }
+
+.jds {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.jds textarea {
+  margin-top: 1rem;
+}
+
+.jd {
+  padding: 8px 12px;
+  border: 1px solid hsl(0, 0%, 12%);
+  border-radius: 4px;
+  color: rgb(83, 83, 83);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.jd:hover {
+  background-color: #1c1c1c;
+}
+
+.jd.selected {
+  border-color: #333333 !important;
+  background-color: #1c1c1c;
+  color: #ababab;
+}
