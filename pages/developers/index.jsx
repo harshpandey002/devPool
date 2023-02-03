@@ -1,10 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useEffect, useState } from "react";
-import styles from "@/styles/Developers.module.css";
-import { BiLinkExternal } from "react-icons/bi";
-import Layout from "@/components/Layout";
 import Developer from "@/components/Developer";
+import Layout from "@/components/Layout";
+import styles from "@/styles/Developers.module.css";
 import { useContract, useContractRead } from "@thirdweb-dev/react";
+import { useEffect, useState } from "react";
+import { BiLinkExternal } from "react-icons/bi";
 
 import { CONTRACT_ADDRESS } from "@/helpers/constants";
 

@@ -1,13 +1,17 @@
 import { ChainId, ThirdwebProvider } from "@thirdweb-dev/react";
 import "../styles/globals.css";
+import UserProvider from "@/context/userContext";
+import Warning from "@/components/Warning";
 
 function MyApp({ Component, pageProps }) {
   const desiredChainId = ChainId.Goerli;
 
   return (
     <ThirdwebProvider desiredChainId={desiredChainId}>
-      <Component {...pageProps} />
-      {/* <NetworkWarning /> */}
+      <UserProvider>
+        <Component {...pageProps} />
+        <Warning />
+      </UserProvider>
     </ThirdwebProvider>
   );
 }

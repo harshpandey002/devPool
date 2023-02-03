@@ -112,9 +112,10 @@ textarea:focus {
   background-color: rgb(52, 52, 52);
 }
 
-#msg-banner {
+#msg-banner,
+#action-banner {
   position: fixed;
-  top: 10%;
+  bottom: 5%;
   left: 50%;
   translate: -50% -50%;
   background-color: var(--primary);
@@ -123,6 +124,14 @@ textarea:focus {
   border-radius: 8px;
   text-align: center;
   color: white;
+  z-index: 100;
+}
+
+#action-banner {
+  background-color: transparent;
+  width: max-content;
+  padding: 0rem;
+  border-radius: initial;
 }
 
 #msg-banner span {

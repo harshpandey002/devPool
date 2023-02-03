@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import { useUserContext } from "@/context/userContext";
 import styles from "@/styles/DeveloperDetail.module.css";
 import { AiFillGithub, AiOutlineLink, AiOutlineTwitter } from "react-icons/ai";
 import { BiLinkExternal } from "react-icons/bi";
@@ -6,6 +7,10 @@ import { FaLinkedinIn } from "react-icons/fa";
 
 export default function Developer({ data }) {
   const { name, email, portfolio, bio, skills } = data;
+
+  const { user } = useUserContext();
+
+  const isRecruiter = user?.role === "recruiter";
 
   return (
     <div className={styles.container}>
@@ -29,7 +34,7 @@ export default function Developer({ data }) {
               <AiFillGithub className={styles.icon} />
               <AiOutlineLink className={styles.icon} />
             </span>
-            <button>Approach</button>
+            {isRecruiter && <button>Approach</button>}
           </div>
         </div>
       </div>
