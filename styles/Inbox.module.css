@@ -1,0 +1,62 @@
+.container {
+  padding-top: 8rem;
+  width: 90%;
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+  color: white;
+}
+
+.notifs {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 90%;
+  max-width: 400px;
+}
+
+.notif {
+  display: flex;
+  gap: 12px;
+  padding: 1rem;
+  background-color: #121212;
+  border-radius: 4px;
+  width: 100%;
+  cursor: pointer;
+}
+
+.notif:hover {
+  background-color: var(--card-bg);
+}
+
+.left {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.right {
+  flex: 1;
+  font-size: 14px;
+}
+
+/* .notif p:first-child {
+} */
+.notif p:last-child {
+  color: #7c7c7c;
+}
+
+.rightIcon {
+  color: gray;
+  align-self: center;
+  transition: translate 0.1s ease;
+}
+
+.notif:hover .rightIcon {
+  translate: 30%;
+}
