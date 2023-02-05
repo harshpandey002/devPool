@@ -3,6 +3,7 @@ import { useUserContext } from "@/context/userContext";
 import useNotify from "@/hooks/useNotify";
 import styles from "@/styles/DeveloperDetail.module.css";
 import { useRef, useState } from "react";
+import { toast } from "react-hot-toast";
 import {
   AiFillGithub,
   AiOutlineLink,
@@ -76,7 +77,7 @@ export default function Developer({ data }) {
                   <AiFillGithub className={styles.icon} />
                 </span>
               )}
-              <span>
+              <span onClick={() => toast.success("Copied to Clipboard")}>
                 <AiOutlineLink className={styles.icon} />
               </span>
             </span>
