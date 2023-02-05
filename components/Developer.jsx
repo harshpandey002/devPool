@@ -13,8 +13,19 @@ import { BiLinkExternal } from "react-icons/bi";
 import { FaLinkedinIn } from "react-icons/fa";
 
 export default function Developer({ data }) {
-  const { name, email, portfolio, bio, skills, experiences, projects, about } =
-    data;
+  const {
+    name,
+    email,
+    twitter,
+    linkedin,
+    github,
+    portfolio,
+    bio,
+    skills,
+    experiences,
+    projects,
+    about,
+  } = data;
   const [showModal, setShowModal] = useState(false);
 
   const { user } = useUserContext();
@@ -50,10 +61,24 @@ export default function Developer({ data }) {
           </a>
           <div className={styles.cta}>
             <span className={styles.socials}>
-              <FaLinkedinIn className={styles.icon} />
-              <AiOutlineTwitter className={styles.icon} />
-              <AiFillGithub className={styles.icon} />
-              <AiOutlineLink className={styles.icon} />
+              {twitter && (
+                <span onClick={() => window.open(twitter, "_blank")}>
+                  <AiOutlineTwitter className={styles.icon} />
+                </span>
+              )}
+              {linkedin && (
+                <span onClick={() => window.open(linkedin, "_blank")}>
+                  <FaLinkedinIn className={styles.icon} />
+                </span>
+              )}
+              {github && (
+                <span onClick={() => window.open(github, "_blank")}>
+                  <AiFillGithub className={styles.icon} />
+                </span>
+              )}
+              <span>
+                <AiOutlineLink className={styles.icon} />
+              </span>
             </span>
             {isRecruiter && (
               <button onClick={() => setShowModal(true)}>Approach</button>
