@@ -24,7 +24,7 @@ export default function Inbox() {
 
 function Notification({ notif }) {
   const recruiterName = notif.title.split("from")[0].trim();
-  const message = JSON.parse(notif.message);
+  const message = notif.message;
 
   return (
     <div className={styles.notif}>
@@ -35,8 +35,8 @@ function Notification({ notif }) {
         />
       </div>
       <div className={styles.right}>
-        <p>{notif.title}</p>
-        <p>{message.message}</p>
+        <p>{notif?.title}</p>
+        <p>{message}</p>
       </div>
       {/* <AiOutlineRight className={styles.rightIcon} /> */}
     </div>

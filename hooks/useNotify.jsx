@@ -6,7 +6,7 @@ export default function useNotify() {
   const PK = process.env.NEXT_PUBLIC_PRIVATE_KEY; // channel private key
   const Pkey = `0x${PK}`;
   const signer = new ethers.Wallet(Pkey);
-  //   const channel = "eip155:5:0x4C4cc0104b7E5895613a2914fACf910d2cb36221";
+  const channel = "eip155:5:0x4C4cc0104b7E5895613a2914fACf910d2cb36221";
 
   const notify = async (address, payload) => {
     try {
@@ -20,7 +20,7 @@ export default function useNotify() {
         },
         payload,
         recipients: `eip155:5:${address}`, // recipient address
-        channel: `eip155:5:${address}`, // your channel address
+        channel: channel, // your channel address
         env: "staging",
       });
 

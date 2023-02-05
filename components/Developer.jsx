@@ -37,8 +37,6 @@ export default function Developer({ data }) {
     setShowModal(false);
   };
 
-  console.log(data);
-
   const PROJECTS = projects.filter((pro) => !!pro.title);
   const EXPERIENCES = experiences.filter((exp) => !!exp.companyName);
 
@@ -122,44 +120,42 @@ export default function Developer({ data }) {
 }
 
 function Modal({ recruiter, developer, closeModal }) {
-  const { wallet, name: devName } = developer;
+  const { wallet: devWallet, name: devName } = developer;
+  const { jobs, name: recruiterName, wallet: recruiterWallet } = recruiter;
 
-  const { jobs } = recruiter;
   const [selected, setSelected] = useState(0);
   const inputRef = useRef();
-
   const notify = useNotify();
 
   const sendJD = () => {
     try {
-      const devBody = {
+      // const body = {
+      //   ...jobs[selected],
+      //   devWallet,
+      //   recruiterWallet,
+      //   devName,
+      //   recruiterName,
+      //   companyName: recruiter.companyName,
+      //   message: inputRef.current.value,
+      // };
+
+      const body = {
         ...jobs[selected],
-        message: inputRef.current.value,
+        recruiterWallet,
+        devName,
+        recruiterName,
         companyName: recruiter.companyName,
+        message: inputRef.current.value,
       };
 
-      const recBody = {
-        name: developer.name,
-        wallet: developer.wallet,
-        message: `You approached ${devName} for ${jobs[selected].jobTitle} role.`,
-      };
-
-      const devPayload = {
+      const payload = {
         title: `${recruiter.name} from ${recruiter.companyName}`,
-        body: JSON.stringify(devBody),
+        body: JSON.stringify(body),
         cta: "",
         img: "",
       };
 
-      const recPayload = {
-        title: `Dev Pool`,
-        body: JSON.stringify(recBody),
-        cta: "",
-        img: "",
-      };
-
-      notify("0x89564b31B65D39855c2adAD63dF76d89114ACA92", devPayload);
-      // notify(recruiter.wallet, recPayload);
+      notify(devWallet, payload);
       closeModal();
     } catch (error) {
       console.log(error);

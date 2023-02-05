@@ -32,11 +32,12 @@ function UserProvider({ children }) {
 
   const getFeeds = async () => {
     const notifs = await PushAPI.user.getFeeds({
-      user: `eip155:5:${"0x89564b31B65D39855c2adAD63dF76d89114ACA92"}`,
+      user: "eip155:5:0x83CA1961e5b150D65c7C9AFD1a9D72bAa5bDcbd8",
       env: "staging",
       spam: true,
     });
-    setNotifications(notifs.filter((n) => n.notification.body === NOTIF_KEY));
+    // setNotifications(notifs.filter((n) => n.notification.body === NOTIF_KEY));
+    setNotifications(notifs);
   };
 
   async function getUser() {
