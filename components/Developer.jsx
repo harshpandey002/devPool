@@ -129,16 +129,6 @@ function Modal({ recruiter, developer, closeModal }) {
 
   const sendJD = () => {
     try {
-      // const body = {
-      //   ...jobs[selected],
-      //   devWallet,
-      //   recruiterWallet,
-      //   devName,
-      //   recruiterName,
-      //   companyName: recruiter.companyName,
-      //   message: inputRef.current.value,
-      // };
-
       const body = {
         ...jobs[selected],
         recruiterWallet,
@@ -155,7 +145,8 @@ function Modal({ recruiter, developer, closeModal }) {
         img: "",
       };
 
-      notify(devWallet, payload);
+      // notify(devWallet, payload);
+      toast.error("PUSH protocol failed us.");
       closeModal();
     } catch (error) {
       console.log(error);

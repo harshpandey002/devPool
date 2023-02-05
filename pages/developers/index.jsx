@@ -97,7 +97,7 @@ function DevCard({ developer, handleClick, activeDev }) {
       />
       <div className={styles.basic}>
         <h2>{name}</h2>
-        <a>
+        <a href={portfolio} target="_balnk">
           {portfolio} <BiLinkExternal />
         </a>
         <p>{email}</p>

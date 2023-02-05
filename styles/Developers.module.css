@@ -71,6 +71,7 @@
 }
 
 .basic a {
+  font-size: 14px;
   color: var(--link);
   margin-bottom: 0.6rem;
   cursor: pointer;
