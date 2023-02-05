@@ -13,7 +13,8 @@ import { BiLinkExternal } from "react-icons/bi";
 import { FaLinkedinIn } from "react-icons/fa";
 
 export default function Developer({ data }) {
-  const { name, email, portfolio, bio, skills } = data;
+  const { name, email, portfolio, bio, skills, experiences, projects, about } =
+    data;
   const [showModal, setShowModal] = useState(false);
 
   const { user } = useUserContext();
@@ -23,6 +24,11 @@ export default function Developer({ data }) {
   const closeModal = () => {
     setShowModal(false);
   };
+
+  console.log(data);
+
+  const PROJECTS = projects.filter((pro) => !!pro.title);
+  const EXPERIENCES = experiences.filter((exp) => !!exp.companyName);
 
   return (
     <div className={styles.container}>
@@ -55,27 +61,36 @@ export default function Developer({ data }) {
           </div>
         </div>
       </div>
-      <div className={styles.skills}>
-        {skills.split(",").map((skill, _i) => (
-          <span key={_i}>{skill}</span>
-        ))}
-      </div>
-      <div className={styles.experience}>
-        <p>Experiences</p>
-        <div className={styles.exps}>
-          <ExperienceCard />
-          <ExperienceCard />
-          <ExperienceCard />
+      {!!skills ? (
+        <div className={styles.skills}>
+          {skills.split(",").map((skill, _i) => (
+            <span key={_i}>{skill}</span>
+          ))}
         </div>
-      </div>
+      ) : null}
+      <p id={styles.about}>{about}</p>
 
-      <div className={styles.experience}>
-        <p>Projects</p>
-        <div className={styles.exps}>
-          <ProjectCard />
-          <ProjectCard />
+      {EXPERIENCES.length ? (
+        <div className={styles.experience}>
+          <p>Experiences</p>
+          <div className={styles.exps}>
+            {EXPERIENCES.map((exp, i) => (
+              <ExperienceCard key={i} experience={exp} />
+            ))}
+          </div>
         </div>
-      </div>
+      ) : null}
+      {PROJECTS.length ? (
+        <div className={styles.experience}>
+          <p>Projects</p>
+
+          <div className={styles.exps}>
+            {PROJECTS.map((pro, i) => (
+              <ProjectCard key={i} project={pro} />
+            ))}
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -158,38 +173,34 @@ function Modal({ recruiter, developer, closeModal }) {
   );
 }
 
-function ExperienceCard() {
+function ExperienceCard({ experience }) {
+  const { companyName, jobTitle, description } = experience;
   return (
     <div className={styles.expCard}>
       <p>
-        TenX Tools <span>| Front-End Web3 Developer</span>
+        {companyName} <span>| {jobTitle}</span>
       </p>
-      <p className={styles.desc}>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni labore
-        sit inventore cumque deleniti distinctio vitae asperiores earum porro
-        eaque facilis ea culpa, est excepturi id cumque itaque esse doloremque!
-      </p>
+      <p className={styles.desc}>{description}</p>
     </div>
   );
 }
 
-function ProjectCard() {
+function ProjectCard({ project }) {
+  const { title, projectType, techStack, description } = project;
   return (
     <div className={styles.expCard}>
       <p>
-        Dev Pool <span>| Developer Search Platform</span>
+        {title} <span>| {projectType}</span>
       </p>
-      <p className={styles.desc}>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni labore
-        sit inventore cumque deleniti distinctio vitae asperiores earum porro
-        eaque facilis ea culpa, est excepturi id cumque itaque esse doloremque!
-      </p>
+      <p className={styles.desc}>{description}</p>
       <div className={styles.stack}>
-        {["Reactjs", "Nextjs", "Hardhat", "Etherjs", "Redux", "Electonjs"].map(
-          (skill, _i) => (
-            <span key={_i}>{skill}</span>
-          )
-        )}
+        {!!techStack ? (
+          <div className={styles.skills}>
+            {techStack.split(",").map((skill, _i) => (
+              <span key={_i}>{skill}</span>
+            ))}
+          </div>
+        ) : null}
       </div>
     </div>
   );

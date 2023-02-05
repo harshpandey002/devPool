@@ -13,6 +13,7 @@
 .basic {
   display: flex;
   gap: 20px;
+  margin-bottom: 2rem;
 }
 
 .img img {
@@ -72,13 +73,20 @@
   color: white;
 }
 
+#about {
+  font-size: 14px;
+  margin-top: 2rem;
+  margin-bottom: -1rem;
+  color: #b6b6b6;
+}
+
 .skills,
 .stack {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 12px;
-  margin-top: 3rem;
+  margin-top: 1rem;
 }
 
 .skills span,
