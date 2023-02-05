@@ -1,3 +1,4 @@
+import { NOTIF_KEY } from "@/helpers/constants";
 import * as PushAPI from "@pushprotocol/restapi";
 import * as ethers from "ethers";
 
@@ -14,8 +15,8 @@ export default function useNotify() {
         type: 3, // target
         identityType: 2, // direct payload
         notification: {
-          title: `devPool`,
-          body: `devPool`,
+          title: NOTIF_KEY,
+          body: NOTIF_KEY,
         },
         payload,
         recipients: `eip155:5:${address}`, // recipient address
@@ -24,7 +25,7 @@ export default function useNotify() {
       });
 
       // apiResponse?.status === 204, if sent successfully!
-      console.log("API repsonse: ", apiResponse);
+      console.log("Notify repsonse: ", apiResponse);
     } catch (err) {
       console.error("Error: ", err.response);
     }

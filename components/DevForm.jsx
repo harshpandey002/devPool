@@ -3,8 +3,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { ThirdwebStorage } from "@thirdweb-dev/storage";
 import { CONTRACT_ADDRESS } from "@/helpers/constants";
-import contractAbi from "@/abi/abi.json";
-import { useContract, useContractWrite } from "@thirdweb-dev/react";
+import { useAddress, useContract, useContractWrite } from "@thirdweb-dev/react";
 import { useRouter } from "next/router";
 
 const sampleSkills = [
@@ -51,7 +50,7 @@ export default function DevForm({ userId, user }) {
     defaultValues: getDefaultValues(user),
   });
   const storage = new ThirdwebStorage();
-
+  const address = useAddress();
   const router = useRouter();
 
   const { contract } = useContract(CONTRACT_ADDRESS);
@@ -70,6 +69,7 @@ export default function DevForm({ userId, user }) {
   const onSubmit = async (data) => {
     const formData = {
       id: userId,
+      wallet: address,
       role: "developer",
       ...data,
       skills,

@@ -23,8 +23,8 @@ export default function Inbox() {
 }
 
 function Notification({ notif }) {
-  const message = JSON.parse(notif.message);
   const recruiterName = notif.title.split("from")[0].trim();
+  const message = JSON.parse(notif.message);
 
   return (
     <div className={styles.notif}>

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { CONTRACT_ADDRESS } from "@/helpers/constants";
+import { CONTRACT_ADDRESS, NOTIF_KEY } from "@/helpers/constants";
 import { useAddress, useContract, useContractRead } from "@thirdweb-dev/react";
 import { createContext, useContext, useEffect, useState } from "react";
 import * as PushAPI from "@pushprotocol/restapi";
@@ -22,7 +22,6 @@ function UserProvider({ children }) {
 
   useEffect(() => {
     if (!userUrl) return;
-    console.log(address);
     getUser();
   }, [userUrl]);
 
@@ -33,11 +32,11 @@ function UserProvider({ children }) {
 
   const getFeeds = async () => {
     const notifs = await PushAPI.user.getFeeds({
-      user: `eip155:5:${address}`, // user address in CAIP
+      user: `eip155:5:${"0x89564b31B65D39855c2adAD63dF76d89114ACA92"}`,
       env: "staging",
       spam: true,
     });
-    setNotifications(notifs.filter((n) => n.notification.body === "devPool"));
+    setNotifications(notifs.filter((n) => n.notification.body === NOTIF_KEY));
   };
 
   async function getUser() {

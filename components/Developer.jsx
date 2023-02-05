@@ -27,7 +27,7 @@ export default function Developer({ data }) {
   return (
     <div className={styles.container}>
       {user?.role === "recruiter" && showModal && (
-        <Modal user={user} closeModal={closeModal} />
+        <Modal recruiter={user} developer={data} closeModal={closeModal} />
       )}
       <div className={styles.basic}>
         <div className={styles.img}>
@@ -80,8 +80,10 @@ export default function Developer({ data }) {
   );
 }
 
-function Modal({ user, closeModal }) {
-  const { jobs } = user;
+function Modal({ recruiter, developer, closeModal }) {
+  const { wallet, name: devName } = developer;
+
+  const { jobs } = recruiter;
   const [selected, setSelected] = useState(0);
   const inputRef = useRef();
 
@@ -89,20 +91,34 @@ function Modal({ user, closeModal }) {
 
   const sendJD = () => {
     try {
-      const body = {
+      const devBody = {
         ...jobs[selected],
         message: inputRef.current.value,
-        companyName: user.companyName,
+        companyName: recruiter.companyName,
       };
 
-      const payload = {
-        title: `${user.name} from ${user.companyName}`,
-        body: JSON.stringify(body),
+      const recBody = {
+        name: developer.name,
+        wallet: developer.wallet,
+        message: `You approached ${devName} for ${jobs[selected].jobTitle} role.`,
+      };
+
+      const devPayload = {
+        title: `${recruiter.name} from ${recruiter.companyName}`,
+        body: JSON.stringify(devBody),
         cta: "",
         img: "",
       };
 
-      notify("0x83CA1961e5b150D65c7C9AFD1a9D72bAa5bDcbd8", payload);
+      const recPayload = {
+        title: `Dev Pool`,
+        body: JSON.stringify(recBody),
+        cta: "",
+        img: "",
+      };
+
+      notify("0x89564b31B65D39855c2adAD63dF76d89114ACA92", devPayload);
+      // notify(recruiter.wallet, recPayload);
       closeModal();
     } catch (error) {
       console.log(error);
@@ -119,7 +135,7 @@ function Modal({ user, closeModal }) {
         </div>
         <div className="modal-body">
           <div className={styles.jds}>
-            {[...jobs, ...jobs].map((job, i) => (
+            {jobs.map((job, i) => (
               <p
                 onClick={() => setSelected(i)}
                 className={`${styles.jd} ${

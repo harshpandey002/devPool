@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { ThirdwebStorage } from "@thirdweb-dev/storage";
 import { CONTRACT_ADDRESS } from "@/helpers/constants";
 import { useRouter } from "next/router";
-import { useContract, useContractWrite } from "@thirdweb-dev/react";
+import { useAddress, useContract, useContractWrite } from "@thirdweb-dev/react";
 
 const getDefaultValues = (user) => ({
   name: user?.name || "",
@@ -23,6 +23,7 @@ export default function RecruiterForm({ userId, user }) {
   const { register, handleSubmit, reset } = useForm({
     defaultValues: getDefaultValues(user),
   });
+  const address = useAddress();
   const storage = new ThirdwebStorage();
 
   const router = useRouter();
@@ -30,7 +31,6 @@ export default function RecruiterForm({ userId, user }) {
   const { contract } = useContract(CONTRACT_ADDRESS);
   const { mutateAsync: updateUser } = useContractWrite(contract, "updateUser");
   const { mutateAsync: createUser } = useContractWrite(contract, "newUser");
-
   useEffect(() => {
     if (!user?.username) return;
 
@@ -41,6 +41,7 @@ export default function RecruiterForm({ userId, user }) {
   const onSubmit = async (data) => {
     const formData = {
       id: userId,
+      wallet: address,
       role: "recruiter",
       ...data,
       jobs,
@@ -55,7 +56,7 @@ export default function RecruiterForm({ userId, user }) {
       } else {
         await createUser([formData.username, url]);
       }
-      router.push(`/developers/${formData.username}`);
+      router.push(`/developers`);
     } catch (error) {
       console.log(error);
     }
