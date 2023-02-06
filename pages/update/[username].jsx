@@ -11,6 +11,7 @@ import { CONTRACT_ADDRESS } from "@/helpers/constants";
 import { toTitleCase } from "@/helpers/functions";
 import { useRouter } from "next/router";
 import { useContract, useContractRead } from "@thirdweb-dev/react";
+import { toast } from "react-hot-toast";
 
 export default function CreateProfile() {
   const router = useRouter();
@@ -32,7 +33,11 @@ export default function CreateProfile() {
   }, [userURL]);
 
   async function getUserDetails() {
-    const res = await fetch(userURL);
+    const res = await toast.promise(fetch(userURL), {
+      loading: "Fetching formdata...",
+      success: <b>Continue Updating</b>,
+      error: <b>Some error occured</b>,
+    });
     const data = await res.json();
     setUser(data);
     setRole(toTitleCase(data?.role));

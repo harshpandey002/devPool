@@ -68,7 +68,7 @@ export default function DevForm({ userId, user }) {
   }, [user]);
 
   const onSubmit = async (data) => {
-    if (data.username) {
+    if (!data.username || !user.username) {
       toast.error("Username is Required.");
       return;
     }

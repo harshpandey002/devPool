@@ -40,6 +40,11 @@ export default function RecruiterForm({ userId, user }) {
   }, [user]);
 
   const onSubmit = async (data) => {
+    if (!data.username || !user.username) {
+      toast.error("Username is Required.");
+      return;
+    }
+
     const formData = {
       id: userId,
       wallet: address,

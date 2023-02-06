@@ -3,6 +3,7 @@ import { CONTRACT_ADDRESS, NOTIF_KEY } from "@/helpers/constants";
 import { useAddress, useContract, useContractRead } from "@thirdweb-dev/react";
 import { createContext, useContext, useEffect, useState } from "react";
 import * as PushAPI from "@pushprotocol/restapi";
+import { toast } from "react-hot-toast";
 
 export const userContext = createContext({});
 

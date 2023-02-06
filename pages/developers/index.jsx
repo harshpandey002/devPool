@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { BiLinkExternal } from "react-icons/bi";
 
 import { CONTRACT_ADDRESS } from "@/helpers/constants";
+import { toast } from "react-hot-toast";
 
 export default function Developers() {
   const [developers, setDevelopers] = useState([]);
@@ -15,8 +16,10 @@ export default function Developers() {
   const { contract } = useContract(CONTRACT_ADDRESS);
   const { data: userCount } = useContractRead(contract, "userCount");
 
+  let check = false;
+
   useEffect(() => {
-    if (!userCount) return;
+    if (!userCount || check) return;
 
     getDevelopers();
   }, [userCount?.toNumber()]);
@@ -26,14 +29,19 @@ export default function Developers() {
   };
 
   async function getDevelopers() {
+    check = true;
     try {
       const promises = [];
-
+      toast("Started");
       for (let i = 0; i < userCount.toNumber(); i++) {
         promises.push(contract.call("users", i));
       }
 
-      const res = await Promise.all(promises);
+      const res = await toast.promise(Promise.all(promises), {
+        loading: "Fetching developers...",
+        success: <b>Done</b>,
+        error: <b>Some error occured</b>,
+      });
       const promisesCid = res.map((each) => fetch(each));
 
       const devsData = await Promise.all(promisesCid);
@@ -42,7 +50,9 @@ export default function Developers() {
       const devs = await Promise.all(devsPromise);
 
       setDevelopers(devs);
+      check = false;
     } catch (error) {
+      check = false;
       console.log(error);
     }
   }
