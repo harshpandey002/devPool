@@ -5,6 +5,7 @@ import { ThirdwebStorage } from "@thirdweb-dev/storage";
 import { CONTRACT_ADDRESS } from "@/helpers/constants";
 import { useRouter } from "next/router";
 import { useAddress, useContract, useContractWrite } from "@thirdweb-dev/react";
+import { toast } from "react-hot-toast";
 
 const getDefaultValues = (user) => ({
   name: user?.name || "",
@@ -48,13 +49,25 @@ export default function RecruiterForm({ userId, user }) {
     };
 
     try {
-      const uri = await storage.upload(formData);
+      const uri = await toast.promise(storage.upload(formData), {
+        loading: "Uploading to IPFS...",
+        success: <b>Uploaded to IPFS!</b>,
+        error: <b>Could not upload</b>,
+      });
       const url = storage.resolveScheme(uri);
 
       if (user) {
-        await updateUser([user.id, url]);
+        await toast.promise(updateUser([user.id, url]), {
+          loading: "Updating your info...",
+          success: <b>Profile Updated!</b>,
+          error: <b>Could not Update!</b>,
+        });
       } else {
-        await createUser([formData.username, url]);
+        await toast.promise(createUser([formData.username, url]), {
+          loading: "Creating you profile...",
+          success: <b>Profile Created!</b>,
+          error: <b>Some Error Occured!</b>,
+        });
       }
       router.push(`/developers`);
     } catch (error) {
@@ -68,10 +81,12 @@ export default function RecruiterForm({ userId, user }) {
         <p>Name</p>
         <input type="text" {...register("name")} placeholder="Furqan Rydhan" />
       </div>
-      <div className={styles.question}>
-        <p>Username</p>
-        <input type="text" {...register("username")} placeholder="furqanR" />
-      </div>
+      {!user?.username ? (
+        <div className={styles.question}>
+          <p>Username</p>
+          <input type="text" {...register("username")} placeholder="furqanR" />
+        </div>
+      ) : null}
       <div className={styles.question}>
         <p>Company Name</p>
         <input

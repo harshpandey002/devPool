@@ -17,9 +17,7 @@ function MyApp({ Component, pageProps }) {
           reverseOrder={false}
           toastOptions={{
             style: {
-              color: "white",
               fontSize: 14,
-              background: "#0a0a0a",
             },
           }}
         />

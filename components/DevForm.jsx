@@ -5,6 +5,7 @@ import { ThirdwebStorage } from "@thirdweb-dev/storage";
 import { CONTRACT_ADDRESS } from "@/helpers/constants";
 import { useAddress, useContract, useContractWrite } from "@thirdweb-dev/react";
 import { useRouter } from "next/router";
+import { toast } from "react-hot-toast";
 
 const sampleSkills = [
   "Reactjs",
@@ -78,13 +79,25 @@ export default function DevForm({ userId, user }) {
     };
 
     try {
-      const uri = await storage.upload(formData);
+      const uri = await toast.promise(storage.upload(formData), {
+        loading: "Uploading to IPFS...",
+        success: <b>Uploaded to IPFS!</b>,
+        error: <b>Could not upload</b>,
+      });
       const url = storage.resolveScheme(uri);
 
       if (user) {
-        await updateUser([user.id, url]);
+        await toast.promise(updateUser([user.id, url]), {
+          loading: "Updating your info...",
+          success: <b>Profile Updated!</b>,
+          error: <b>Could not Update</b>,
+        });
       } else {
-        await createUser([formData.username, url]);
+        await toast.promise(createUser([formData.username, url]), {
+          loading: "Creating you profile...",
+          success: <b>Profile Created!</b>,
+          error: <b>Some Error Occured</b>,
+        });
       }
       router.push(`/developers/${formData.username}`);
     } catch (error) {
@@ -98,14 +111,16 @@ export default function DevForm({ userId, user }) {
         <p>Name</p>
         <input type="text" {...register("name")} placeholder="Harsh Pandey" />
       </div>
-      <div className={styles.question}>
-        <p>Username</p>
-        <input
-          type="text"
-          {...register("username")}
-          placeholder="harshpandey002"
-        />
-      </div>
+      {!user?.username ? (
+        <div className={styles.question}>
+          <p>Username</p>
+          <input
+            type="text"
+            {...register("username")}
+            placeholder="harshpandey002"
+          />
+        </div>
+      ) : null}
       <div className={styles.question}>
         <p>Email</p>
         <input

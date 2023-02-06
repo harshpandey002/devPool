@@ -5,10 +5,12 @@ import RecruiterForm from "@/components/RecruiterForm";
 import styles from "@/styles/CreateProfile.module.css";
 import Link from "next/link";
 import { useContract, useContractRead } from "@thirdweb-dev/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BsArrowLeft } from "react-icons/bs";
 import contractABI from "@/abi/abi.json";
 import { CONTRACT_ADDRESS } from "@/helpers/constants";
+import { useUserContext } from "@/context/userContext";
+import { toast } from "react-hot-toast";
 
 const getUserCountConfig = {
   address: CONTRACT_ADDRESS,
@@ -23,6 +25,15 @@ export default function CreateProfile() {
   const { data: userCount } = useContractRead(contract, "userCount");
 
   const userId = userCount?.toNumber();
+
+  const { user } = useUserContext();
+
+  useEffect(() => {
+    if (!user?.username) return;
+    toast("One profile per wallet is allowed.", {
+      icon: "🥺",
+    });
+  }, [user]);
 
   return (
     <Layout customHeader={<CustomHeader />}>
