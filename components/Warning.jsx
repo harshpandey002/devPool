@@ -1,12 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
 import { useAddress } from "@thirdweb-dev/react";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import ConnectWallet from "./ConnectWallet";
 
 export default function Warning() {
   const address = useAddress();
-
-  if (address) return <></>;
+  const router = useRouter();
+  if (address || router.asPath === "/") return <></>;
 
   return (
     <p id="action-banner">

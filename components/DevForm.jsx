@@ -142,7 +142,7 @@ export default function DevForm({ userId, user }) {
         <textarea
           rows={3}
           {...register("bio")}
-          placeholder="Building https://blocktrain.info | Full-Stack | Blockchain Developer | Content Writer | Trader & Investor"
+          placeholder="Developer | Content Writer | Trader & Investor"
         />
       </div>
       <div className={styles.question}>
@@ -150,7 +150,7 @@ export default function DevForm({ userId, user }) {
         <textarea
           rows={5}
           {...register("about")}
-          placeholder="I’m a Front-End web3 developer with over two years of development experience with Reactjs/Nextjs. I'm particularly good at developing responsive user interfaces for web-based applications with a focus on secure and smooth user experience."
+          placeholder="I’m a Full-Stack web3 developer with over two years of development experience with Reactjs/Nextjs. I'm perticulary good at developing responsive user interfaces for web-based applications with a focus on secure and smooth user experience."
         />
       </div>
       <Skills skills={skills} setSkills={setSkills} />

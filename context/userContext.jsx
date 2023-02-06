@@ -9,7 +9,7 @@ export const userContext = createContext({});
 export const useUserContext = () => useContext(userContext);
 
 function UserProvider({ children }) {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(null);
   const [notifications, setNotifications] = useState([]);
 
   const { contract } = useContract(CONTRACT_ADDRESS);
@@ -26,7 +26,10 @@ function UserProvider({ children }) {
   }, [userUrl]);
 
   useEffect(() => {
-    if (!address) return;
+    if (!address) {
+      setUser(null);
+      return;
+    }
     getFeeds();
   }, [address]);
 
