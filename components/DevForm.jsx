@@ -68,6 +68,11 @@ export default function DevForm({ userId, user }) {
   }, [user]);
 
   const onSubmit = async (data) => {
+    if (data.username) {
+      toast.error("Username is Required.");
+      return;
+    }
+
     const formData = {
       id: userId,
       wallet: address,
