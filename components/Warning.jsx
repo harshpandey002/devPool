@@ -7,7 +7,13 @@ import ConnectWallet from "./ConnectWallet";
 export default function Warning() {
   const address = useAddress();
   const router = useRouter();
-  if (address || router.asPath === "/") return <></>;
+
+  if (
+    address ||
+    router.asPath === "/" ||
+    router.pathname === "/developers/[username]"
+  )
+    return <></>;
 
   return (
     <p id="action-banner">

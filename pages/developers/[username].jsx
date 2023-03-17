@@ -10,6 +10,7 @@ import { CONTRACT_ADDRESS } from "@/helpers/constants";
 
 export default function Resume() {
   const [dev, setDev] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
   const username = router.query.username;
@@ -21,22 +22,38 @@ export default function Resume() {
   );
 
   useEffect(() => {
+    if (!loading) {
+      setLoading(true);
+    }
     if (!userURL) return;
     getUserDetails();
+
+    return () => {
+      setLoading(false);
+    };
   }, [userURL]);
 
   async function getUserDetails() {
-    const res = await fetch(userURL);
-    const data = await res.json();
-    setDev(data);
+    try {
+      const res = await fetch(userURL);
+      const data = await res.json();
+      setDev(data);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+    }
   }
 
   return (
     <Layout customHeader={<></>}>
       <div className={styles.container}>
-        <Link href="/developers" id={styles.back}>
-          <BsArrowLeft /> All developers
-        </Link>
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          <Link href="/developers" id={styles.back}>
+            <BsArrowLeft /> All developers
+          </Link>
+        )}
         {dev ? <Developer data={dev} /> : null}
       </div>
     </Layout>
